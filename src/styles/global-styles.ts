@@ -1,36 +1,39 @@
 import { createGlobalStyle } from 'styled-components';
-import { StyleConstants } from './StyleConstants';
-/* istanbul ignore next */
+import { themes } from './themes';
+
+const createCssVariables = theme =>
+  Object.keys(theme).map(key => `--${key}: ${theme[key]};`);
+
 export const GlobalStyle = createGlobalStyle`
+  * {
+    ${createCssVariables(themes.DARK)}
+  }
+  
   html,
   body {
     height: 100%;
     width: 100%;
-    line-height: 1.5;
   }
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    padding-top: ${StyleConstants.NAV_BAR_HEIGHT};
-    background-color: ${p => p.theme.background};
+    background-color: var(--background);
+    color: var(--font-normal);
   }
 
-  body.fontLoaded {
-    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  #root {
+    min-height: 100%;
+    min-width: 100%;
   }
-  
+
   p,
   label {
+    font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
   }
 
-  input, select, button {
+  input, select {
     font-family: inherit;
     font-size: inherit;
-  }
-
-  .icon {
-    width: 1.5rem;
-    height: 1.5rem;
   }
 `;
