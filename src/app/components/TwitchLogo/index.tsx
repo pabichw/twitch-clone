@@ -3,7 +3,7 @@ import { TwitchSvg } from './__assets/TwitchSVG';
 import styled from 'styled-components';
 
 type TwitchLogoProps = {
-  color: string;
+  color?: string;
 };
 
 const TwitchLogo: FunctionComponent<TwitchLogoProps> = props => (
@@ -15,9 +15,7 @@ const TwitchLogo: FunctionComponent<TwitchLogoProps> = props => (
 const Wrapper = styled.div`
   height: 100%;
   width: 30px;
-  padding-top: 3px;
-  zoom: 1.1;
-  background-color: green;
+  padding: 3px 0 0 3px;
 `;
 
 export default TwitchLogo;

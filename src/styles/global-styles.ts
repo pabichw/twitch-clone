@@ -9,6 +9,13 @@ export const GlobalStyle = createGlobalStyle`
     ${createCssVariables(themes.DARK)}
   }
   
+  button {
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: 100%;
+  }
+  
   html,
   body {
     height: 100%;
