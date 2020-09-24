@@ -25,7 +25,7 @@ class SideNav extends Component<{}, SideNavState> {
     return (
       <Aside isOpened={isOpened}>
         <Content>
-          <CollapseBtnWrapper>
+          <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
             <Button
               type={BUTTON.ICON}
               icon={
@@ -70,9 +70,13 @@ const IconWrap = styled.div`
   transform: rotateZ(${(props: IconWrapProps) => props.rotate});
 `;
 
+type CollapseBtnWrapper = {
+  r: string;
+};
+
 const CollapseBtnWrapper = styled.div`
   position: absolute;
-  right: 10px;
+  right: ${(props: CollapseBtnWrapper) => props.r};
   top: 8px;
 `;
 
