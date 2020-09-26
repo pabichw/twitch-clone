@@ -1,8 +1,17 @@
-import { AuthStore, SIGN_IN, SIGN_IN_COMPLETE, AuthActionTypes } from './types';
+import {
+  AuthStore,
+  SIGN_IN,
+  SIGN_IN_COMPLETE,
+  AuthActionTypes,
+  GET_APP_TOKEN_COMPLETE,
+} from './types';
 
 const initialState: AuthStore = {
   isLoading: false,
-  isAuthenticated: false,
+  isUserAuthenticated: false,
+  isAppAuthenticated: false,
+  appToken: '',
+  userToken: '',
 };
 
 export default (state = initialState, action: AuthActionTypes) => {
@@ -10,7 +19,10 @@ export default (state = initialState, action: AuthActionTypes) => {
     case SIGN_IN:
       return { ...state, isLoading: true };
     case SIGN_IN_COMPLETE:
-      return { ...state, isAuthenticated: true, isLoading: false };
+      return { ...state, isUserAuthenticated: true, isLoading: false };
+    case GET_APP_TOKEN_COMPLETE:
+      debugger;
+      return { ...state, isAppAuthenticated: true, appToken: action.payload };
     default:
       return state;
   }

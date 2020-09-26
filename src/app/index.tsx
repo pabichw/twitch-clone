@@ -7,20 +7,40 @@ import { HomePage } from './containers/HomePage/Loadable';
 import TopNav from './components/TopNav';
 import SideNav from './components/SideNav';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { getAppToken } from '../store/auth/actions';
+import { AppToken } from '../types/Api';
+import { RootState } from '../types';
 
-export function App() {
-  return (
-    <BrowserRouter>
-      <TopNav />
-      <Main>
-        <SideNav />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-        </Switch>
-      </Main>
-      <GlobalStyle />
-    </BrowserRouter>
-  );
+interface AppProps {
+  getAppToken: () => void;
+  isAppAuthenticated: boolean;
+  appToken: AppToken;
+}
+
+class App extends React.Component<AppProps> {
+  async componentDidMount() {
+    const { getAppToken } = this.props;
+    await getAppToken();
+  }
+
+  render() {
+    const { appToken } = this.props;
+    console.log('props', this.props);
+    return (
+      <BrowserRouter>
+        <TopNav />
+        <Main>
+          <SideNav />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+          </Switch>
+          {appToken}
+        </Main>
+        <GlobalStyle />
+      </BrowserRouter>
+    );
+  }
 }
 
 const Main = styled.main`
@@ -31,3 +51,14 @@ const Main = styled.main`
   width: 100%;
   min-height: calc(100vh - 50px);
 `;
+
+const mapState = (state: RootState) => ({
+  isAppAuthenticated: state.auth.isAppAuthenticated,
+  appToken: state.auth.appToken,
+});
+
+const mapDispatch = {
+  getAppToken,
+};
+
+export default connect(mapState, mapDispatch)(App);

@@ -13,9 +13,9 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as serviceWorker from 'serviceWorker';
 import 'sanitize.css/sanitize.css';
-
+import { config } from 'dotenv';
 // Import root app
-import { App } from 'app';
+import App from './app';
 
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -23,6 +23,10 @@ import { configureAppStore } from 'store/configureStore';
 
 // Initialize languages
 import './locales/i18n';
+
+const environment = process.env.NODE_ENV;
+console.log('environment',environment);
+config({ path: `../.env.${environment}` });
 
 const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;

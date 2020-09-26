@@ -6,27 +6,26 @@ import AnonUserContainer from './components/AnonUserContainer';
 
 type AuthNavProps = {
   auth: AuthStore;
-  doSignIn: (SignInCredentials) => void;
+  signIn: (SignInCredentials) => void;
 };
 
 class AuthNav extends Component<AuthNavProps> {
   render() {
     const {
-      auth: { isAuthenticated, isLoading },
+      auth: { isUserAuthenticated, isLoading },
     } = this.props;
 
     return (
-      <div
-        onClick={() => {
-          console.log(this.props);
-        }}
-      >
-        {isAuthenticated ? (
+      <div>
+        {isUserAuthenticated ? (
           'LoggedIn'
         ) : (
           <AnonUserContainer
             onProfileIconClick={() => console.log('on profile pic')}
-            onSignInClick={() => console.log('on sign in')}
+            onSignInClick={() => {
+              console.log('on sign in');
+              this.props.signIn({email: 'dupa', password: 'zyrafydoszafy'});
+            }}
             onSignUpClick={() => console.log('on sign up')}
           />
         )}
@@ -38,7 +37,7 @@ class AuthNav extends Component<AuthNavProps> {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = {
-  doSignIn: signIn,
+  signIn,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthNav);

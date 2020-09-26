@@ -23,3 +23,6 @@ template
 
 .vscode
 .idea
+
+.env.development
+.env.production
