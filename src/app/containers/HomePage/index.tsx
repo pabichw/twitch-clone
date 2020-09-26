@@ -1,12 +1,26 @@
 import React from 'react';
 import Page from '../../components/Page';
+import { connect } from 'react-redux';
+import { HomeStore } from '../../../store/home/types';
+import { getStreams } from '../../../store/home/actions';
+import Section from './components/Section';
 
-type HomePageProps = {};
+type HomePageProps = {
+  home: HomeStore;
+  getStreams: () => void;
+};
 
-export class HomePage extends React.Component<HomePageProps, {}> {
-  async componentDidMount() {}
+class HomePage extends React.Component<HomePageProps, {}> {
+  async componentDidMount() {
+    const { getStreams } = this.props;
+    getStreams();
+  }
 
   render() {
+    const {
+      home: { streams },
+    } = this.props;
+
     return (
       <Page
         title={'Home'}
@@ -15,8 +29,19 @@ export class HomePage extends React.Component<HomePageProps, {}> {
           { name: 'description', content: 'Some description' },
         ]}
       >
-        <span>HomePage container</span>
+        {streams && (
+          <Section label="Live Stream you may like" streams={streams} />
+        )}
       </Page>
     );
   }
 }
+
+const mapState = ({ home }: { home: HomeStore }) => ({
+  home,
+});
+
+const mapDispatch = {
+  getStreams,
+};
+export default connect(mapState, mapDispatch)(HomePage);

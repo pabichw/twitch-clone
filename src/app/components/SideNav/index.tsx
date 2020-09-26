@@ -4,6 +4,7 @@ import { fontSizes, fontWeights } from '../../../styles/themes';
 import { BUTTON } from '../../../types/UITypes';
 import Button from '../Button';
 import CollapseSVG from '../../__assets/CollapseSVG';
+import { sizes } from '../../../styles/media';
 
 type SideNavState = {
   isMobile: Boolean;
@@ -16,14 +17,28 @@ class SideNav extends Component<{}, SideNavState> {
     isOpened: true,
   };
 
+  componentDidMount() {
+    const { isMobile } = this.state;
+    window.addEventListener('resize', () => {
+      console.log('width', window.innerWidth, 'sizes', sizes.medium);
+
+      if (!isMobile && window.innerWidth < sizes.medium) {
+        this.setState({ isMobile: true });
+      }
+      if (window.innerWidth >= sizes.medium) {
+        this.setState({ isMobile: false });
+      }
+    });
+  }
+
   handleCollapse = () => {
     this.setState(state => ({ isOpened: !state.isOpened }));
   };
 
   render() {
-    const { isOpened } = this.state;
+    const { isOpened, isMobile } = this.state;
     return (
-      <Aside isOpened={isOpened}>
+      <Aside isOpened={isOpened && !isMobile}>
         <Content>
           <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
             <Button
@@ -36,7 +51,7 @@ class SideNav extends Component<{}, SideNavState> {
               onClick={this.handleCollapse}
             />
           </CollapseBtnWrapper>
-          {isOpened && <Header>Recommended channels</Header>}
+          {isOpened && !isMobile && <Header>Recommended channels</Header>}
         </Content>
       </Aside>
     );

@@ -21,7 +21,6 @@ export default (state = initialState, action: AuthActionTypes) => {
     case SIGN_IN_COMPLETE:
       return { ...state, isUserAuthenticated: true, isLoading: false };
     case GET_APP_TOKEN_COMPLETE:
-      debugger;
       return { ...state, isAppAuthenticated: true, appToken: action.payload };
     default:
       return state;

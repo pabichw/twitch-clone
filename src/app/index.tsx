@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyle } from 'styles/global-styles';
 
-import { HomePage } from './containers/HomePage/Loadable';
+import HomePage from './containers/HomePage';
 import TopNav from './components/TopNav';
 import SideNav from './components/SideNav';
 import styled from 'styled-components';
@@ -26,16 +26,19 @@ class App extends React.Component<AppProps> {
 
   render() {
     const { appToken } = this.props;
-    console.log('props', this.props);
+
     return (
       <BrowserRouter>
         <TopNav />
         <Main>
           <SideNav />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-          </Switch>
-          {appToken}
+          <Article>
+            {appToken && (
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+              </Switch>
+            )}
+          </Article>
         </Main>
         <GlobalStyle />
       </BrowserRouter>
@@ -50,6 +53,10 @@ const Main = styled.main`
   z-index: 0;
   width: 100%;
   min-height: calc(100vh - 50px);
+`;
+
+const Article = styled.article`
+  width: 100%;
 `;
 
 const mapState = (state: RootState) => ({

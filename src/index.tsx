@@ -25,7 +25,6 @@ import { configureAppStore } from 'store/configureStore';
 import './locales/i18n';
 
 const environment = process.env.NODE_ENV;
-console.log('environment',environment);
 config({ path: `../.env.${environment}` });
 
 const store = configureAppStore();
