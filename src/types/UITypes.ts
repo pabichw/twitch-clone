@@ -1,5 +1,5 @@
 export enum BUTTON {
-  ICON,
+  TRANSPARENT,
   PRIMARY,
   SECONDARY,
 }

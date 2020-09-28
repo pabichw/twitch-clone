@@ -4,6 +4,9 @@ import { fontWeights } from '../../../../styles/themes';
 import { Stream } from '../../../../types/Twitch';
 import isEmpty from 'lodash/isEmpty';
 import StreamThumbnail from './StreamThumbnail';
+import Button from '../../../components/Button';
+import { BUTTON } from '../../../../types/UITypes';
+import { ArrowDownSvg } from '../../../__assets/ArrorDownSVG';
 
 interface SectionProps {
   label?: string;
@@ -87,11 +90,33 @@ interface ShowMoreProps {
 }
 
 const ShowMore: FunctionComponent<ShowMoreProps> = ({ onClick }) => (
-  <ShowMoreText onClick={onClick}>Show more</ShowMoreText>
+  <ShowMoreLine onClick={onClick}>
+    <ShowMoreWrap>
+      <Button
+        type={BUTTON.TRANSPARENT}
+        text="Show more"
+        onClick={onClick}
+        iconRight={<ArrowDownSvg />}
+        color="var(--primaryLight)"
+      />
+    </ShowMoreWrap>
+  </ShowMoreLine>
 );
 
-const ShowMoreText = styled.p`
+const ShowMoreWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 100%;
+  background: var(--background);
+`;
+
+const ShowMoreLine = styled.p`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center
   width: 100%;
   text-align: center;
   cursor: pointer;
@@ -103,21 +128,11 @@ const ShowMoreText = styled.p`
   &:before {
     content: '';
     position: absolute;
+    z-index: -1;
     left: 0;
     top: 12px;
 
-    width: 40%;
-    height: 1px;
-    background: var(--separator-color);
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 12px;
-
-    width: 40%;
+    width: 100%;
     height: 1px;
     background: var(--separator-color);
   }

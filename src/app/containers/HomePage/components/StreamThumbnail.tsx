@@ -3,6 +3,7 @@ import { Stream } from '../../../../types/Twitch';
 import styled from 'styled-components';
 import { imageWithDimensions } from '../../../../utils/other';
 import { fontSizes, fontWeights } from '../../../../styles/themes';
+import Chip from '../../../components/Chip';
 
 type StreamThumbnailProps = {
   stream: Stream;
@@ -17,6 +18,15 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
     </Top>
     <Bottom>
       <Title>{stream.title}</Title>
+      <Subtitle>{stream.user_name}</Subtitle>
+      <Subtitle>{stream.user_id}</Subtitle>
+      {stream.tag_ids && (
+        <TagsContainer>
+          {stream.tag_ids.map(tag => (
+            <Chip key={`chip-${tag}`} text={tag} onClick={console.log} />
+          ))}
+        </TagsContainer>
+      )}
     </Bottom>
   </Container>
 );
@@ -50,6 +60,20 @@ const Title = styled.p`
   font-weight: ${fontWeights.bold};
   margin-bottom: 3px;
   line-height: 18px;
+`;
+
+const Subtitle = styled.p`
+  color: var(--font-secondary);
+  font-size: ${fontSizes.regular};
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary);
+  }
+`;
+
+const TagsContainer = styled.div`
+  display: flex;
 `;
 
 const Top = styled.div``;

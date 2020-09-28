@@ -48,7 +48,7 @@ class SideNav extends Component<SideNavProps, SideNavState> {
         <Content>
           <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
             <Button
-              type={BUTTON.ICON}
+              type={BUTTON.TRANSPARENT}
               icon={
                 <IconWrap rotate={isOpened ? '0deg' : '180deg'}>
                   <CollapseSVG />

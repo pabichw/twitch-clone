@@ -5,7 +5,9 @@ import { Color } from '../../../types';
 import { fontSizes, fontWeights } from '../../../styles/themes';
 
 type ButtonProps = {
+  color?: Color;
   icon?: any;
+  iconRight?: any;
   onClick?: () => void;
   text?: string;
   type: BUTTON;
@@ -13,19 +15,25 @@ type ButtonProps = {
 
 const Button: FunctionComponent<ButtonProps> = ({
   icon,
+  iconRight,
   onClick,
   text,
   type = BUTTON.SECONDARY,
+  color,
 }) => {
   return (
     <Container
       onClick={onClick}
-      customPadding={type === BUTTON.ICON ? '0' : '0 10px'}
+      customPadding={
+        type === BUTTON.TRANSPARENT && icon && !text ? '0' : '0 10px'
+      }
       hover={STYLES[type].hover}
       {...STYLES[type]}
+      {...(color && { style: { color } })}
     >
       {icon}
       {text}
+      {iconRight && <IconRight>{iconRight}</IconRight>}
     </Container>
   );
 };
@@ -53,7 +61,7 @@ const STYLES = {
       background: 'var(--secondaryHover)',
     },
   },
-  [BUTTON.ICON]: {
+  [BUTTON.TRANSPARENT]: {
     background: 'transparent',
 
     hover: {
@@ -80,6 +88,10 @@ const Container = styled.button`
   :hover {
     background: ${(props: ContainerProps) => props.hover.background};
   }
+`;
+
+const IconRight = styled.span`
+  margin-left: 5px;
 `;
 
 export default Button;

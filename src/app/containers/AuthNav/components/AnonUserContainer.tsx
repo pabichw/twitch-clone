@@ -19,7 +19,7 @@ const AnonUserContainer: FunctionComponent<AnonUserContainerProps> = ({
     <Button type={BUTTON.SECONDARY} text="Log In" onClick={onSignInClick} />
     <Button type={BUTTON.PRIMARY} text="Sign Up" onClick={onSignUpClick} />
     <Button
-      type={BUTTON.ICON}
+      type={BUTTON.TRANSPARENT}
       icon={
         <IconWrap>
           <ProfileSVG />
