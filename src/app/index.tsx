@@ -56,7 +56,7 @@ const Main = styled.main`
 `;
 
 const Article = styled.article`
-  width: 100%;
+  flex: 1;
 `;
 
 const mapState = (state: RootState) => ({
