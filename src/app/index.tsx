@@ -11,11 +11,14 @@ import { connect } from 'react-redux';
 import { getAppToken } from '../store/auth/actions';
 import { AppToken } from '../types/Api';
 import { RootState } from '../types';
+import { toggleSideNav } from '../store/layout/actions';
 
 interface AppProps {
   getAppToken: () => void;
   isAppAuthenticated: boolean;
   appToken: AppToken;
+  isSideNavCollapsed: boolean;
+  toggleSideNav: () => void;
 }
 
 class App extends React.Component<AppProps> {
@@ -24,15 +27,27 @@ class App extends React.Component<AppProps> {
     await getAppToken();
   }
 
-  render() {
-    const { appToken } = this.props;
+  handleOnToggle = () => {
+    const { toggleSideNav } = this.props;
+    toggleSideNav();
+  };
 
+  render() {
+    const { appToken, isSideNavCollapsed } = this.props;
+
+    console.log('isSIdeCollapsed', isSideNavCollapsed);
     return (
       <BrowserRouter>
         <TopNav />
         <Main>
-          <SideNav />
-          <Article>
+          <SideNav
+            isOpened={isSideNavCollapsed}
+            onToggle={this.handleOnToggle}
+          />
+          <Article
+            id="article"
+            maxWidth={`calc(100% - ${isSideNavCollapsed ? '240px' : '50px'})`}
+          >
             {appToken && (
               <Switch>
                 <Route exact path="/" component={HomePage} />
@@ -55,17 +70,23 @@ const Main = styled.main`
   min-height: calc(100vh - 50px);
 `;
 
+type ArticleProps = {
+  maxWidth: string;
+};
 const Article = styled.article`
   flex: 1;
+  max-width: ${(props: ArticleProps) => props.maxWidth};
 `;
 
 const mapState = (state: RootState) => ({
   isAppAuthenticated: state.auth.isAppAuthenticated,
   appToken: state.auth.appToken,
+  isSideNavCollapsed: state.layout.isSideNavCollapsed,
 });
 
 const mapDispatch = {
   getAppToken,
+  toggleSideNav,
 };
 
 export default connect(mapState, mapDispatch)(App);

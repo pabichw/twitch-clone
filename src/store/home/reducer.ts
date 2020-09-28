@@ -10,6 +10,7 @@ const initialState: HomeStore = {
   streams: [],
 };
 
+// TODO: this should return HomeStore
 export default (state = initialState, action: HomeActionTypes) => {
   switch (action.type) {
     case GET_STREAMS:

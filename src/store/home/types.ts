@@ -1,4 +1,4 @@
-import { APIError, GetAppTokenResponse } from '../../types/Api';
+import { APIError, GetStreamsResponse } from '../../types/Api';
 import { Stream } from '../../types/Twitch';
 
 export const GET_STREAMS = 'GET_STREAMS';
@@ -16,7 +16,7 @@ interface GetStreamsAction {
 
 interface GetStreamCompleteAction {
   type: typeof GET_STREAMS_COMPLETE;
-  payload: GetAppTokenResponse;
+  payload: GetStreamsResponse;
 }
 
 interface GetStreamErrorAction {

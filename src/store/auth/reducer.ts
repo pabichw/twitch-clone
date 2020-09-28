@@ -14,6 +14,7 @@ const initialState: AuthStore = {
   userToken: '',
 };
 
+// TODO: this should return AuthStore
 export default (state = initialState, action: AuthActionTypes) => {
   switch (action.type) {
     case SIGN_IN:

@@ -23,6 +23,7 @@ class HomePage extends React.Component<HomePageProps, {}> {
 
     return (
       <Page
+        htmlProps={{ id: 'page-home' }}
         title={'Home'}
         metaTags={[
           { name: 'title', content: 'Home Title' },
@@ -30,7 +31,10 @@ class HomePage extends React.Component<HomePageProps, {}> {
         ]}
       >
         {streams && (
-          <Section label="Live Stream you may like" streams={streams} />
+          <Section
+            label="Live channels we think you’ll like"
+            streams={streams}
+          />
         )}
       </Page>
     );

@@ -6,15 +6,18 @@ import Button from '../Button';
 import CollapseSVG from '../../__assets/CollapseSVG';
 import { sizes } from '../../../styles/media';
 
-type SideNavState = {
+interface SideNavState {
   isMobile: Boolean;
-  isOpened: Boolean;
-};
+}
 
-class SideNav extends Component<{}, SideNavState> {
+interface SideNavProps {
+  isOpened: boolean;
+  onToggle: () => void;
+}
+
+class SideNav extends Component<SideNavProps, SideNavState> {
   state = {
     isMobile: false,
-    isOpened: true,
   };
 
   componentDidMount() {
@@ -32,11 +35,14 @@ class SideNav extends Component<{}, SideNavState> {
   }
 
   handleCollapse = () => {
-    this.setState(state => ({ isOpened: !state.isOpened }));
+    const { onToggle } = this.props;
+    onToggle();
   };
 
   render() {
-    const { isOpened, isMobile } = this.state;
+    const { isMobile } = this.state;
+    const { isOpened } = this.props;
+
     return (
       <Aside isOpened={isOpened && !isMobile}>
         <Content>

@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   button {
     border: 0;
     padding: 0;
+    margin: 0;
     font-family: inherit;
     font-size: 100%;
   }
@@ -35,8 +36,9 @@ export const GlobalStyle = createGlobalStyle`
 
   p,
   label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
   }
 
   input, select {

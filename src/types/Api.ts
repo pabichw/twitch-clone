@@ -6,7 +6,11 @@ export type ApiResponse = {
   data: object;
 };
 
-export type GetAppTokenResponse = ApiResponse;
+export type GetAppTokenResponse = ApiResponse & {
+  data: {
+    access_token: string;
+  };
+};
 
 export type GetStreamsResponse = ApiResponse & {
   data: Array<Stream>;
