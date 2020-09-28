@@ -5,10 +5,10 @@ import { apiConfig } from '../../config/apiConfig';
 import { GET_STREAMS } from './types';
 
 const { ROOT_URL } = apiConfig;
-const APP_TOKEN = localStorage.getItem('APP_TOKEN');
 
 export function* getStreamsFlow() {
   try {
+    const APP_TOKEN = localStorage.getItem('APP_TOKEN');
     const {
       data: { data },
     } = yield call(() => api.get(`${ROOT_URL}/getStreams?token=${APP_TOKEN}`));
