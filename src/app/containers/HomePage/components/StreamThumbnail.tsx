@@ -48,6 +48,7 @@ const Container = styled.div`
 
 const Thumbnail = styled.img`
   height: auto;
+  background: var(--placeholder);
   width: 100%;
 `;
 
@@ -76,7 +77,9 @@ const TagsContainer = styled.div`
   display: flex;
 `;
 
-const Top = styled.div``;
+const Top = styled.div`
+  flex: 1;
+`;
 
 const Bottom = styled.div`
   display: block;

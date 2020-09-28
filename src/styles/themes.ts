@@ -37,6 +37,7 @@ type Theme = {
   background: Color;
   navbar: Color;
   sidebar: Color;
+  placeholder: Color;
   ['font-normal']: Color;
   ['font-secondary']: Color;
   ['separator-color']: Color;
@@ -58,6 +59,7 @@ export const themes: Themes = {
     secondary: palette.gray1,
     secondaryHover: palette.gray2,
     background: palette.dark3,
+    placeholder: palette.gray3,
     navbar: palette.dark2,
     sidebar: palette.dark1,
     'font-normal': palette.offWhite,
