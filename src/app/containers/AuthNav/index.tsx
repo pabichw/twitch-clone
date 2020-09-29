@@ -12,7 +12,7 @@ type AuthNavProps = {
 class AuthNav extends Component<AuthNavProps> {
   render() {
     const {
-      auth: { isUserAuthenticated, isLoading },
+      auth: { isUserAuthenticated },
     } = this.props;
 
     return (
@@ -24,12 +24,11 @@ class AuthNav extends Component<AuthNavProps> {
             onProfileIconClick={() => console.log('on profile pic')}
             onSignInClick={() => {
               console.log('on sign in');
-              this.props.signIn({email: 'dupa', password: 'zyrafydoszafy'});
+              this.props.signIn({ email: 'dupa', password: 'zyrafydoszafy' });
             }}
             onSignUpClick={() => console.log('on sign up')}
           />
         )}
-        {isLoading && 'Loading'}
       </div>
     );
   }

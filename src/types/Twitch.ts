@@ -12,4 +12,12 @@ export type Stream = {
   tag_ids: Array<string>;
 };
 
+export type DummyStream = {
+  title: string;
+  thumbnail_url: string;
+  user_name: string;
+  game_id: string;
+  tag_ids: Array<string>;
+};
+
 export type Video = {};

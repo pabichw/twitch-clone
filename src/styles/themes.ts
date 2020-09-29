@@ -17,6 +17,7 @@ export const palette = {
   dark2: 'rgb(23, 23, 26)',
   dark3: 'rgb(16, 16, 17)',
   darkTransparent: 'rgba(0,0,0,0.7)',
+  black: 'rgb(0,0,0)',
   gray1: 'rgba(255, 255, 255, 0.15)',
   gray2: 'rgba(255, 255, 255, 0.2)',
   gray3: 'rgb(173, 173, 184)',
@@ -38,6 +39,7 @@ type Theme = {
   navbar: Color;
   sidebar: Color;
   placeholder: Color;
+  ['placeholder-bckg']: Color;
   ['font-normal']: Color;
   ['font-secondary']: Color;
   ['separator-color']: Color;
@@ -45,6 +47,9 @@ type Theme = {
   ['chip-bckg']: Color;
   ['chip-bckg-hover']: Color;
   ['chip-color']: Color;
+
+  ['main-loader-bckg']: Color;
+  ['main-loader-spinner']: Color;
 };
 
 type Themes = {
@@ -59,7 +64,8 @@ export const themes: Themes = {
     secondary: palette.gray1,
     secondaryHover: palette.gray2,
     background: palette.dark3,
-    placeholder: palette.gray3,
+    placeholder: palette.dark2,
+    'placeholder-bckg': palette.dark1,
     navbar: palette.dark2,
     sidebar: palette.dark1,
     'font-normal': palette.offWhite,
@@ -68,5 +74,7 @@ export const themes: Themes = {
     'chip-bckg': 'rgba(255, 255, 255, 0.15)',
     'chip-bckg-hover': 'rgba(255, 255, 255, 0.2)',
     'chip-color': palette.whiteTransparent,
+    'main-loader-bckg': palette.black,
+    'main-loader-spinner': palette.gray1,
   },
 };

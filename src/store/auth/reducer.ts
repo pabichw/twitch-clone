@@ -4,6 +4,7 @@ import {
   SIGN_IN_COMPLETE,
   AuthActionTypes,
   GET_APP_TOKEN_COMPLETE,
+  GET_APP_TOKEN,
 } from './types';
 
 const initialState: AuthStore = {
@@ -18,11 +19,18 @@ const initialState: AuthStore = {
 export default (state = initialState, action: AuthActionTypes) => {
   switch (action.type) {
     case SIGN_IN:
-      return { ...state, isLoading: true };
+      return { ...state };
     case SIGN_IN_COMPLETE:
-      return { ...state, isUserAuthenticated: true, isLoading: false };
+      return { ...state, isUserAuthenticated: true };
+    case GET_APP_TOKEN:
+      return { ...state, isLoading: true };
     case GET_APP_TOKEN_COMPLETE:
-      return { ...state, isAppAuthenticated: true, appToken: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        isAppAuthenticated: true,
+        appToken: action.payload,
+      };
     default:
       return state;
   }

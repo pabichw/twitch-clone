@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { HomeStore } from '../../../store/home/types';
 import { getStreams } from '../../../store/home/actions';
 import Section from './components/Section';
+import { Stream } from '../../../types/Twitch';
 
 type HomePageProps = {
-  home: HomeStore;
+  streams: Array<Stream>;
+  fetchingStreams: boolean;
   getStreams: () => void;
 };
 
@@ -17,10 +19,9 @@ class HomePage extends React.Component<HomePageProps, {}> {
   }
 
   render() {
-    const {
-      home: { streams },
-    } = this.props;
+    const { streams, fetchingStreams } = this.props;
 
+    console.log('fetching ', fetchingStreams, 'streams', streams);
     return (
       <Page
         htmlProps={{ id: 'page-home' }}
@@ -30,19 +31,19 @@ class HomePage extends React.Component<HomePageProps, {}> {
           { name: 'description', content: 'Some description' },
         ]}
       >
-        {streams && (
-          <Section
-            label="Live channels we think you’ll like"
-            streams={streams}
-          />
-        )}
+        <Section
+          label="Live channels we think you’ll like"
+          streams={streams}
+          loading={fetchingStreams}
+        />
       </Page>
     );
   }
 }
 
 const mapState = ({ home }: { home: HomeStore }) => ({
-  home,
+  streams: home.streams,
+  fetchingStreams: home.isLoading,
 });
 
 const mapDispatch = {

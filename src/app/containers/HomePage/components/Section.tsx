@@ -1,25 +1,30 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { fontWeights } from '../../../../styles/themes';
-import { Stream } from '../../../../types/Twitch';
+import { DummyStream, Stream } from '../../../../types/Twitch';
 import isEmpty from 'lodash/isEmpty';
 import StreamThumbnail from './StreamThumbnail';
 import Button from '../../../components/Button';
 import { BUTTON } from '../../../../types/UITypes';
 import { ArrowDownSvg } from '../../../__assets/ArrorDownSVG';
+import { Fade } from '@material-ui/core';
+import { MOCKS } from '../../../__tests__/mocks';
 
 interface SectionProps {
   label?: string;
   streams: Array<Stream>;
+  loading: boolean;
 }
 
 interface SectionState {
+  fade: boolean;
   expanded: boolean;
   lastRender: Date;
 }
 
 class Section extends React.Component<SectionProps, SectionState> {
   state = {
+    fade: false, // for initial fade in animation
     expanded: false,
     lastRender: new Date(), // just to force rerendering on resize
   };
@@ -28,39 +33,76 @@ class Section extends React.Component<SectionProps, SectionState> {
     window.addEventListener('resize', () => {
       this.setState({ lastRender: new Date() });
     });
+
+    this.setState({ fade: true });
   }
 
   render() {
-    const { expanded } = this.state;
-    const { label, streams } = this.props;
-    console.log('streams', streams);
+    const { fade, expanded } = this.state;
+    const { label, streams, loading } = this.props;
+
     const minPxWidthForStream = 300;
     const sectionId = `stream-row-${label}`;
     const articleElem = document.getElementById('article');
 
+    const dummyStreams: Array<DummyStream> = MOCKS.STREAMS;
+    console.log('streams', streams, 'isEmpty(streams)', isEmpty(streams));
     return (
-      <SectionContainer>
-        {label && <Label>{label}</Label>}
-        <StreamsRow id={sectionId}>
-          {!isEmpty(streams) &&
-            streams.map((stream: Stream, idx: number) => {
-              let isTooNarrow;
-              if (articleElem) {
-                isTooNarrow =
-                  articleElem.offsetWidth - 100 <
-                  (minPxWidthForStream - 10) * (idx + 1); // min - padding left/right
-              }
-              return (
-                !isTooNarrow && (
-                  <StreamThumbnail key={`stream-${idx}`} stream={stream} />
-                )
-              );
-            })}
-        </StreamsRow>
-        {!expanded && (
-          <ShowMore onClick={() => this.setState({ expanded: !expanded })} />
-        )}
-      </SectionContainer>
+      <Fade in={fade}>
+        <SectionContainer>
+          {label && <Label>{label}</Label>}
+          <StreamsRow id={sectionId}>
+            {(isEmpty(streams) ? dummyStreams : streams).map(
+              (stream: Stream | DummyStream, idx: number) => {
+                let isTooNarrow;
+                if (articleElem) {
+                  isTooNarrow =
+                    articleElem.offsetWidth - 100 <
+                    (minPxWidthForStream - 10) * (idx + 1); // min - padding left/right
+                }
+                return (
+                  !isTooNarrow && (
+                    <StreamThumbnail
+                      key={`stream-${idx}`}
+                      stream={stream}
+                      loading={loading}
+                    />
+                  )
+                );
+              },
+            )}
+          </StreamsRow>
+          {expanded && (
+            <StreamsRow id={`${sectionId}-2`}>
+              {streams
+                .slice(4, streams.length - 1)
+                .map((stream: Stream | DummyStream, idx: number) => {
+                  let isTooNarrow;
+                  if (articleElem) {
+                    isTooNarrow =
+                      articleElem.offsetWidth - 100 <
+                      (minPxWidthForStream - 10) * (idx + 1); // min - padding left/right
+                  }
+                  return (
+                    !isTooNarrow && (
+                      <StreamThumbnail
+                        key={`stream-${idx}`}
+                        stream={stream}
+                        loading={loading}
+                      />
+                    )
+                  );
+                })}
+            </StreamsRow>
+          )}
+          {!loading && (
+            <ShowMore
+              expanded={expanded}
+              onClick={() => this.setState({ expanded: !expanded })}
+            />
+          )}
+        </SectionContainer>
+      </Fade>
     );
   }
 }
@@ -77,6 +119,7 @@ const StreamsRow = styled.div`
   justify-content: space-between;
   max-width: 100%;
   flex: 1;
+  padding-bottom: 20px;
 `;
 
 const Label = styled.span`
@@ -86,20 +129,23 @@ const Label = styled.span`
 `;
 
 interface ShowMoreProps {
+  expanded: boolean;
   onClick: () => void;
 }
 
-const ShowMore: FunctionComponent<ShowMoreProps> = ({ onClick }) => (
+const ShowMore: FunctionComponent<ShowMoreProps> = ({ expanded, onClick }) => (
   <ShowMoreLine onClick={onClick}>
-    <ShowMoreWrap>
-      <Button
-        type={BUTTON.TRANSPARENT}
-        text="Show more"
-        onClick={onClick}
-        iconRight={<ArrowDownSvg />}
-        color="var(--primaryLight)"
-      />
-    </ShowMoreWrap>
+    {!expanded && (
+      <ShowMoreWrap>
+        <Button
+          type={BUTTON.TRANSPARENT}
+          text="Show more"
+          onClick={onClick}
+          iconRight={<ArrowDownSvg />}
+          color="var(--primaryLight)"
+        />
+      </ShowMoreWrap>
+    )}
   </ShowMoreLine>
 );
 

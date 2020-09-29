@@ -12,11 +12,13 @@ import { getAppToken } from '../store/auth/actions';
 import { AppToken } from '../types/Api';
 import { RootState } from '../types';
 import { toggleSideNav } from '../store/layout/actions';
+import { MainLoader } from './components/MainLoader';
 
 interface AppProps {
   getAppToken: () => void;
   isAppAuthenticated: boolean;
   appToken: AppToken;
+  fetchingAppToken: boolean;
   isSideNavCollapsed: boolean;
   toggleSideNav: () => void;
 }
@@ -33,27 +35,35 @@ class App extends React.Component<AppProps> {
   };
 
   render() {
-    const { appToken, isSideNavCollapsed } = this.props;
+    const { appToken, fetchingAppToken, isSideNavCollapsed } = this.props;
 
-    console.log('isSIdeCollapsed', isSideNavCollapsed);
+    const showMainLoader = fetchingAppToken;
     return (
       <BrowserRouter>
         <TopNav />
         <Main>
-          <SideNav
-            isOpened={isSideNavCollapsed}
-            onToggle={this.handleOnToggle}
-          />
-          <Article
-            id="article"
-            maxWidth={`calc(100% - ${isSideNavCollapsed ? '240px' : '50px'})`}
-          >
-            {appToken && (
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-              </Switch>
-            )}
-          </Article>
+          {showMainLoader ? (
+            <MainLoader />
+          ) : (
+            <>
+              <SideNav
+                isOpened={isSideNavCollapsed}
+                onToggle={this.handleOnToggle}
+              />
+              <Article
+                id="article"
+                maxWidth={`calc(100% - ${
+                  isSideNavCollapsed ? '240px' : '50px'
+                })`}
+              >
+                {appToken && (
+                  <Switch>
+                    <Route exact path="/" component={HomePage} />
+                  </Switch>
+                )}
+              </Article>
+            </>
+          )}
         </Main>
         <GlobalStyle />
       </BrowserRouter>
@@ -81,6 +91,7 @@ const Article = styled.article`
 const mapState = (state: RootState) => ({
   isAppAuthenticated: state.auth.isAppAuthenticated,
   appToken: state.auth.appToken,
+  fetchingAppToken: state.auth.isLoading,
   isSideNavCollapsed: state.layout.isSideNavCollapsed,
 });
 

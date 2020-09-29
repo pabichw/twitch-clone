@@ -1,39 +1,79 @@
-import React, { FunctionComponent } from 'react';
-import { Stream } from '../../../../types/Twitch';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { DummyStream, Stream } from '../../../../types/Twitch';
 import styled from 'styled-components';
 import { imageWithDimensions } from '../../../../utils/other';
 import { fontSizes, fontWeights } from '../../../../styles/themes';
 import Chip from '../../../components/Chip';
+import {
+  LoadingPlaceholder,
+  Placeholder,
+} from '../../../components/LoadingPlaceholder';
+import { Fade } from '@material-ui/core';
+import { Clickable } from '../../../components/Clickable/Clickable';
 
 type StreamThumbnailProps = {
-  stream: Stream;
+  stream: Stream | DummyStream;
+  loading: boolean;
 };
 
 const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   stream,
-}) => (
-  <Container>
-    <Top>
-      <Thumbnail src={imageWithDimensions(stream.thumbnail_url, 440, 248)} />
-    </Top>
-    <Bottom>
-      <Title>{stream.title}</Title>
-      <Subtitle>{stream.user_name}</Subtitle>
-      <Subtitle>{stream.user_id}</Subtitle>
-      {stream.tag_ids && (
-        <TagsContainer>
-          {stream.tag_ids.map(tag => (
-            <Chip key={`chip-${tag}`} text={tag} onClick={console.log} />
-          ))}
-        </TagsContainer>
-      )}
-    </Bottom>
-  </Container>
-);
+  loading,
+}) => {
+  const [fade, setFade] = useState(false);
+  useEffect(() => setFade(true), []);
+
+  return (
+    <Fade in={fade}>
+      <Container>
+        <Top>
+          {loading ? (
+            <LoadingPlaceholder type={Placeholder.VIDEO_FRAME} />
+          ) : (
+            <ThumbnailWrapper>
+              <Thumbnail
+                src={imageWithDimensions(stream.thumbnail_url, 440, 248)}
+              />
+            </ThumbnailWrapper>
+          )}
+        </Top>
+        <Bottom>
+          {loading ? (
+            <LoadingPlaceholder type={Placeholder.STREAM_BOTTOM} />
+          ) : (
+            <>
+              <Clickable>
+                <Title>{stream.title}</Title>
+              </Clickable>
+              <Clickable>
+                <Subtitle>{stream.user_name}</Subtitle>
+              </Clickable>
+              <Clickable>
+                <Subtitle>{stream.game_id}</Subtitle>
+              </Clickable>
+              {stream.tag_ids && (
+                <TagsContainer>
+                  {stream.tag_ids.map(tag => (
+                    <Chip
+                      key={`chip-${tag}`}
+                      text={tag}
+                      onClick={console.log}
+                    />
+                  ))}
+                </TagsContainer>
+              )}
+            </>
+          )}
+        </Bottom>
+      </Container>
+    </Fade>
+  );
+};
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
   padding: 0 5px;
   min-width: 300px;
 
@@ -46,9 +86,15 @@ const Container = styled.div`
   }
 `;
 
-const Thumbnail = styled.img`
-  height: auto;
+const ThumbnailWrapper = styled.div`
+  height: 100%;
   background: var(--placeholder);
+  width: 100%;
+  position: relative !important;
+`;
+
+const Thumbnail = styled.img`
+  height: 100%;
   width: 100%;
 `;
 
@@ -75,6 +121,10 @@ const Subtitle = styled.p`
 
 const TagsContainer = styled.div`
   display: flex;
+
+  :first-child {
+    margin-left: 0;
+  }
 `;
 
 const Top = styled.div`
