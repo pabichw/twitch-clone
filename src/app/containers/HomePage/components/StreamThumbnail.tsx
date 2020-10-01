@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { DummyStream, Stream } from '../../../../types/Twitch';
 import styled from 'styled-components';
-import { imageWithDimensions } from '../../../../utils/other';
+import { getImageOfSize } from '../../../../utils/other';
 import { fontSizes, fontWeights } from '../../../../styles/themes';
 import Chip from '../../../components/Chip';
 import {
@@ -31,9 +31,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
             <LoadingPlaceholder type={Placeholder.VIDEO_FRAME} />
           ) : (
             <ThumbnailWrapper>
-              <Thumbnail
-                src={imageWithDimensions(stream.thumbnail_url, 440, 248)}
-              />
+              <Thumbnail src={getImageOfSize(stream.thumbnail_url, 440, 248)} />
             </ThumbnailWrapper>
           )}
         </Top>

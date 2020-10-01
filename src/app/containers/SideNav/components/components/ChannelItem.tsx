@@ -5,6 +5,7 @@ import { Channel, User } from '../../../../../types/Twitch';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../../../../store/sidenav/actions';
 import { fontSizes, fontWeights } from '../../../../../styles/themes';
+import { getImageOfSize } from '../../../../../utils/other';
 
 interface ChannelItemProps {
   content: Channel;
@@ -64,7 +65,7 @@ const Content: React.FC<ContentProps> = ({ user, collapsed }) => {
   return (
     <Row>
       <AvatarWrapper>
-        <Avatar src={actualUser.profile_image_url} />
+        <Avatar src={getImageOfSize(actualUser.profile_image_url, 70, 70)} />
       </AvatarWrapper>
       {!collapsed && (
         <Box ml="10px">
