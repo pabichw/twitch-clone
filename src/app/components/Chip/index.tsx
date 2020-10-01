@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { BUTTON } from '../../../types/UITypes';
 import { Color } from '../../../types';
 import { fontSizes, fontWeights } from '../../../styles/themes';
 
