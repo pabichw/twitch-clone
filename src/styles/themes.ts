@@ -40,6 +40,7 @@ type Theme = {
   sidebar: Color;
   placeholder: Color;
   ['placeholder-bckg']: Color;
+  ['placeholder-bckg2']: Color;
   ['font-normal']: Color;
   ['font-secondary']: Color;
   ['separator-color']: Color;
@@ -66,6 +67,7 @@ export const themes: Themes = {
     background: palette.dark3,
     placeholder: palette.dark2,
     'placeholder-bckg': palette.dark1,
+    'placeholder-bckg2': palette.dark2,
     navbar: palette.dark2,
     sidebar: palette.dark1,
     'font-normal': palette.offWhite,

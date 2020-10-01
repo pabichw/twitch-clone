@@ -7,12 +7,13 @@ interface ChannelsListProps {
   channels: Array<Channel>;
   collapsed: boolean;
 }
+
 export const ChannelsList: React.FC<ChannelsListProps> = ({
   channels,
   collapsed,
 }) => {
   return (
-    <List>
+    <List mt={collapsed ? '50px' : '0px'}>
       {channels.map(ch => (
         <ChannelItem content={ch} minimized={collapsed} />
       ))}
@@ -20,6 +21,12 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({
   );
 };
 
+interface ListProps {
+  mt: string;
+}
+
 const List = styled.ul`
   list-style: none;
+  padding-left: 0px;
+  margin-top: ${(props: ListProps) => props.mt};
 `;
