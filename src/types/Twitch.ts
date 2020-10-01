@@ -1,3 +1,5 @@
+import { Email } from './Other';
+
 export type Stream = {
   id: string;
   user_id: string;
@@ -10,6 +12,33 @@ export type Stream = {
   language: string;
   thumbnail_url: string;
   tag_ids: Array<string>;
+};
+
+export type Channel = {
+  id: string;
+  user_id: string;
+  user_name: string;
+  game_id: string;
+  type: string;
+  title: string;
+  viewer_count: number;
+  started_at: string;
+  language: string;
+  thumbnail_url: string;
+  tag_ids: Array<string>;
+};
+
+export type User = {
+  id: string;
+  login: string;
+  display_name: string;
+  type: string;
+  broadcaster_type: string;
+  description: string;
+  profile_image_url: string;
+  offline_image_url: string;
+  view_count: Number;
+  email: Email;
 };
 
 export type DummyStream = {

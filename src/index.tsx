@@ -23,6 +23,8 @@ import { configureAppStore } from 'store/configureStore';
 
 // Initialize languages
 import './locales/i18n';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const environment = process.env.NODE_ENV;
 config({ path: `../.env.${environment}` });
@@ -40,6 +42,7 @@ const ConnectedApp = ({ Component }: Props) => (
         <Component />
       </React.StrictMode>
     </HelmetProvider>
+    <ToastContainer />
   </Provider>
 );
 const render = (Component: typeof App) => {

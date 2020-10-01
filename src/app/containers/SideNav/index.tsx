@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { fontSizes, fontWeights } from '../../../styles/themes';
 import { BUTTON } from '../../../types/UITypes';
-import Button from '../Button';
+import Button from '../../components/Button';
 import CollapseSVG from '../../__assets/CollapseSVG';
 import { sizes } from '../../../styles/media';
+import { ChannelsList } from './components/ChannelsList';
+import { connect } from 'react-redux';
+import { RootState } from '../../../types';
+import { getStreams } from '../../../store/home/actions';
+import { Stream } from '../../../types/Twitch';
 
 interface SideNavState {
   isMobile: Boolean;
@@ -13,6 +18,7 @@ interface SideNavState {
 interface SideNavProps {
   isOpened: boolean;
   onToggle: () => void;
+  streams: Array<Stream>;
 }
 
 class SideNav extends Component<SideNavProps, SideNavState> {
@@ -23,8 +29,6 @@ class SideNav extends Component<SideNavProps, SideNavState> {
   componentDidMount() {
     const { isMobile } = this.state;
     window.addEventListener('resize', () => {
-      console.log('width', window.innerWidth, 'sizes', sizes.medium);
-
       if (!isMobile && window.innerWidth < sizes.medium) {
         this.setState({ isMobile: true });
       }
@@ -41,24 +45,31 @@ class SideNav extends Component<SideNavProps, SideNavState> {
 
   render() {
     const { isMobile } = this.state;
-    const { isOpened } = this.props;
+    const { isOpened, streams } = this.props;
+
+    const channels = streams.slice(0, 10); //because there is no channels-specific endpoint available
 
     return (
       <Aside isOpened={isOpened && !isMobile}>
-        <Content>
-          <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
-            <Button
-              type={BUTTON.TRANSPARENT}
-              icon={
-                <IconWrap rotate={isOpened ? '0deg' : '180deg'}>
-                  <CollapseSVG />
-                </IconWrap>
-              }
-              onClick={this.handleCollapse}
-            />
-          </CollapseBtnWrapper>
-          {isOpened && !isMobile && <Header>Recommended channels</Header>}
-        </Content>
+        {isMobile ? (
+          <MobileContent />
+        ) : (
+          <Content>
+            <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
+              <Button
+                type={BUTTON.TRANSPARENT}
+                icon={
+                  <IconWrap rotate={isOpened ? '0deg' : '180deg'}>
+                    <CollapseSVG />
+                  </IconWrap>
+                }
+                onClick={this.handleCollapse}
+              />
+            </CollapseBtnWrapper>
+            {isOpened && <Header>Recommended channels</Header>}
+            <ChannelsList channels={channels} collapsed={!isOpened} />
+          </Content>
+        )}
       </Aside>
     );
   }
@@ -80,6 +91,8 @@ const Content = styled.div`
   position: relative;
   width: 100%;
 `;
+
+const MobileContent = styled.div``;
 
 type IconWrapProps = {
   rotate?: string;
@@ -110,4 +123,12 @@ const Header = styled.header`
   text-transform: uppercase;
 `;
 
-export default SideNav;
+const mapState = (state: RootState) => ({
+  streams: state.home.streams,
+});
+
+const mapDispatch = {
+  getStreams,
+};
+
+export default connect(mapState, mapDispatch)(SideNav);

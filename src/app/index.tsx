@@ -5,7 +5,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import HomePage from './containers/HomePage';
 import TopNav from './components/TopNav';
-import SideNav from './components/SideNav';
+import SideNav from './containers/SideNav';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getAppToken } from '../store/auth/actions';

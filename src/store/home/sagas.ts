@@ -11,7 +11,7 @@ export function* getStreamsFlow() {
     const APP_TOKEN = localStorage.getItem('APP_TOKEN');
     const {
       data: { data },
-    } = yield call(() => api.get(`${ROOT_URL}/getStreams?token=${APP_TOKEN}`));
+    } = yield call(() => api.get(`${ROOT_URL}/streams?token=${APP_TOKEN}`));
     yield put(getStreamsComplete(data));
   } catch (err) {
     yield put(getStreamsError(err));
