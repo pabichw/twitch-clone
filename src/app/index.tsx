@@ -13,6 +13,7 @@ import { AppToken } from '../types/Api';
 import { RootState } from '../types';
 import { toggleSideNav } from '../store/layout/actions';
 import { MainLoader } from './components/MainLoader';
+import StreamPage from './containers/StreamPage';
 
 interface AppProps {
   getAppToken: () => void;
@@ -59,6 +60,7 @@ class App extends React.Component<AppProps> {
                 {appToken && (
                   <Switch>
                     <Route exact path="/" component={HomePage} />
+                    <Route exact path="/:id" component={StreamPage} />
                   </Switch>
                 )}
               </Article>

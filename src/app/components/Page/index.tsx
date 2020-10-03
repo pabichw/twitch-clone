@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Meta } from '../../../types';
 import styled from 'styled-components';
@@ -22,11 +17,6 @@ const Page: FunctionComponent<PageProps> = ({
   metaTags,
   children,
 }) => {
-  const [appear, setAppear] = useState(false);
-
-  useEffect(() => setAppear(true), []);
-
-  console.log('appear', appear);
   return (
     <Container {...htmlProps}>
       <Fade timeout={5000}>

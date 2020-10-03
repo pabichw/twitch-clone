@@ -14,18 +14,20 @@ import { Clickable } from '../../../components/Clickable/Clickable';
 type StreamThumbnailProps = {
   stream: Stream | DummyStream;
   loading: boolean;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   stream,
   loading,
+  onClick,
 }) => {
   const [fade, setFade] = useState(false);
   useEffect(() => setFade(true), []);
 
   return (
     <Fade in={fade}>
-      <Container>
+      <Container onClick={onClick}>
         <Top>
           {loading ? (
             <LoadingPlaceholder type={Placeholder.VIDEO_FRAME} />

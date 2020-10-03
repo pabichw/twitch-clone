@@ -21,7 +21,6 @@ class HomePage extends React.Component<HomePageProps, {}> {
   render() {
     const { streams, fetchingStreams } = this.props;
 
-    console.log('fetching ', fetchingStreams, 'streams', streams);
     return (
       <Page
         htmlProps={{ id: 'page-home' }}
