@@ -43,7 +43,7 @@ class Section extends React.Component<
 
   onStreamClick = (stream: Stream | DummyStream): void => {
     console.log('stream', stream, 'props', this.props);
-    this.props.history.push(`asd`);
+    this.props.history.push(`${stream.user_name}`);
   };
 
   render() {

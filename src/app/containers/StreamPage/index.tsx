@@ -21,7 +21,11 @@ class StreamPage extends React.Component<
   }
 
   render() {
-    const url = `https://player.twitch.tv/?channel=shaperka&parent=${window.location.hostname}`;
+    const { match } = this.props;
+    // @ts-ignore
+    const { id } = match.params;
+
+    const url = `https://player.twitch.tv/?channel=${id}&parent=${window.location.hostname}`;
     console.log('props', this.props);
     return (
       <Page
