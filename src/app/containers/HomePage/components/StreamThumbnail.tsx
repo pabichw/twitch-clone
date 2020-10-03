@@ -77,6 +77,8 @@ const Container = styled.div`
   padding: 0 5px;
   min-width: 300px;
 
+  cursor: pointer;
+
   :first-child {
     padding-left: 0;
   }
