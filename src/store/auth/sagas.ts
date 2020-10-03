@@ -19,6 +19,9 @@ export function* signInFlow({ payload: signInCredentials }: ReturnType<any>) {
 export function* getAppTokenFlow() {
   try {
     const { data } = yield call(() => api.get(`${ROOT_URL}/getAppAccessToken`));
+    api.defaults.headers.common[
+      'authorization'
+    ] = `bearer ${data.access_token}`;
     localStorage.setItem('APP_TOKEN', data.access_token);
     yield put(getAppTokenComplete(data));
   } catch (err) {
