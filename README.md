@@ -18,3 +18,5 @@ Run `yarn start` to start in development environment.
 <H3>Proxy Api</H3>
 Just simple api that connects client side with actual twitch API. Needed for hiding secrets etc.
 https://github.com/pabich/twitch-clone-api
+
+<H4>To be continued... maybe...<h4>
