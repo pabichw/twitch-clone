@@ -11,7 +11,7 @@ const TwitchVideoEmbed: React.FC<TwitchVideoEmbedProps> = ({
   return (
     <Container>
       <iframe
-        title={`stream`}
+        title="stream"
         src={url}
         frameBorder="0"
         allowFullScreen={true}

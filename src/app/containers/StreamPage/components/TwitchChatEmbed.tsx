@@ -10,7 +10,7 @@ const TwitchChatEmbed: React.FC<TwitchChatEmbedProps> = ({
 }: TwitchChatEmbedProps) => {
   return (
     <Container>
-      <iframe src={url} height="100%" width="100%" />
+      <iframe title="stream-chat" src={url} height="100%" width="100%" />
     </Container>
   );
 };
