@@ -3,6 +3,8 @@ import Page from '../../components/Page';
 import { connect } from 'react-redux';
 import TwitchVideoEmbed from './components/TwitchVideoEmbed';
 import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
+import TwitchChatEmbed from './components/TwitchChatEmbed';
 
 interface RouterProps {
   id: string | undefined;
@@ -25,7 +27,10 @@ class StreamPage extends React.Component<
     // @ts-ignore
     const { id } = match.params;
 
-    const url = `https://player.twitch.tv/?channel=${id}&parent=${window.location.hostname}`;
+    const { hostname } = window.location;
+    const url = `https://player.twitch.tv/?channel=${id}&parent=${hostname}`;
+    const urlChat = `https://www.twitch.tv/embed/${id}/chat?parent=${hostname}&darkpopout`;
+
     console.log('props', this.props);
     return (
       <Page
@@ -36,12 +41,30 @@ class StreamPage extends React.Component<
           { name: 'description', content: 'Stream Page' },
         ]}
       >
-        <TwitchVideoEmbed url={url} />
+        <Content>
+          <Main>
+            <TwitchVideoEmbed url={url} />
+          </Main>
+          <RightCol>
+            <TwitchChatEmbed url={urlChat} />
+          </RightCol>
+        </Content>
       </Page>
     );
   }
 }
 
+const Content = styled.div`
+  display: flex;
+`;
+const Main = styled.main`
+  flex: 1;
+`;
+
+const RightCol = styled.div`
+  width: 340px;
+  height: calc(100vh - 50px);
+`;
 const mapState = () => ({});
 const mapDispatch = {};
 

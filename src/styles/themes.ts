@@ -44,6 +44,7 @@ type Theme = {
   ['font-normal']: Color;
   ['font-secondary']: Color;
   ['separator-color']: Color;
+  ['separator-color2']: Color;
 
   ['chip-bckg']: Color;
   ['chip-bckg-hover']: Color;
@@ -73,6 +74,7 @@ export const themes: Themes = {
     'font-normal': palette.offWhite,
     'font-secondary': palette.gray3,
     'separator-color': palette.gray1,
+    'separator-color2': `rgba(255, 255, 255, 0.1)`,
     'chip-bckg': 'rgba(255, 255, 255, 0.15)',
     'chip-bckg-hover': 'rgba(255, 255, 255, 0.2)',
     'chip-color': palette.whiteTransparent,

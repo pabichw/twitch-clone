@@ -29,6 +29,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 0;
+  border-bottom: 1px solid var(--separator-color2);
 `;
 
 export default TwitchVideoEmbed;
