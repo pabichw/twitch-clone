@@ -4,7 +4,7 @@ import TwitchLogo from '../TwitchLogo';
 import Categories from './Categories';
 import AuthNav from '../../containers/AuthNav';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { MOBILE_BREAKPOINT, sizes } from '../../../styles/media';
+import { MOBILE_BREAKPOINT } from '../../../styles/media';
 
 type TopNavProps = {};
 
@@ -71,10 +71,7 @@ const Left = styled.div`
   height: 100%;
   width: 407px;
 `;
-const Center = styled.div`
-  height: 100%;
-  max-width: 400px;
-`;
+
 const Right = styled.div`
   display: flex;
   justify-content: flex-end;

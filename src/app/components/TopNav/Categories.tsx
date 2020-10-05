@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { fontSizes } from '../../../styles/themes';
-import { MOBILE_BREAKPOINT, sizes } from '../../../styles/media';
+import { MOBILE_BREAKPOINT } from '../../../styles/media';
 import MusicSvg from '../../__assets/MusicSvg';
 import HeartSvg from '../../__assets/HeartSvg';
 import TrophySvg from '../../__assets/TrophySvg';

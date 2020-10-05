@@ -11,20 +11,34 @@ interface RouterProps {
   id: string | undefined;
 }
 
-type StreamPageProps = {};
+interface StreamPageProps {}
+
+interface StreamPageState {
+  isMobile: boolean;
+}
 
 class StreamPage extends React.Component<
   RouteComponentProps<RouterProps> & StreamPageProps,
-  {}
+  StreamPageState
 > {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMobile: window.innerWidth < MOBILE_BREAKPOINT,
+    };
+  }
   async componentDidMount() {
     const { match } = this.props;
-
+    window.addEventListener('resize', () => {
+      this.setState({ isMobile: window.innerWidth < MOBILE_BREAKPOINT });
+    });
     console.log('match', match);
   }
 
   render() {
     const { match } = this.props;
+    const { isMobile } = this.state;
     // @ts-ignore
     const { id } = match.params;
 
@@ -46,9 +60,11 @@ class StreamPage extends React.Component<
           <Main>
             <TwitchVideoEmbed url={url} />
           </Main>
-          <RightCol>
-            <TwitchChatEmbed url={urlChat} />
-          </RightCol>
+          {!isMobile && (
+            <RightCol>
+              <TwitchChatEmbed url={urlChat} />
+            </RightCol>
+          )}
         </Content>
       </Page>
     );

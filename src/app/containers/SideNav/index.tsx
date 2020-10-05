@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { RootState } from '../../../types';
 import { getStreams } from '../../../store/home/actions';
 import { Channel, Stream } from '../../../types/Twitch';
-import CameraSvg from '../../__assets/CameraSvg';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { channelRoutingName } from '../../../utils/other';
 
