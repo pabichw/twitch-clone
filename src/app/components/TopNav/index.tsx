@@ -3,17 +3,27 @@ import styled from 'styled-components';
 import TwitchLogo from '../TwitchLogo';
 import Categories from './Categories';
 import AuthNav from '../../containers/AuthNav';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+type TopNavProps = {};
 
 type TopNavState = {
   isLoggedIn: Boolean;
 };
 
-class TopNav extends Component<{}, TopNavState> {
+class TopNav extends Component<
+  RouteComponentProps<{}> & TopNavProps,
+  TopNavState
+> {
+  twitchLogoClick = () => {
+    this.props.history.push('/');
+  };
+
   render() {
     return (
       <Nav>
         <Left>
-          <TwitchLogo />
+          <TwitchLogo onClick={this.twitchLogoClick} />
           <Categories />
         </Left>
         <Center>Search</Center>
@@ -57,4 +67,4 @@ const Right = styled.div`
   width: 407px;
 `;
 
-export default TopNav;
+export default withRouter(TopNav);

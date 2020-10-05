@@ -17,10 +17,10 @@ export const SpinnerSvg: FunctionComponent<SpinnerSvgProps> = ({ color }) => (
       cy="50"
       r="32"
       stroke={color || 'var(--main-loader-spinner)'}
-      stroke-width="8"
-      stroke-dasharray="50.26548245743669 50.26548245743669"
+      strokeWidth="8"
+      strokeDasharray="50.26548245743669 50.26548245743669"
       fill="none"
-      stroke-linecap="round"
+      strokeLinecap="round"
     >
       <animateTransform
         attributeName="transform"

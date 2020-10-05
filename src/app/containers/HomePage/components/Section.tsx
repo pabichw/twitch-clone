@@ -9,6 +9,7 @@ import { BUTTON } from '../../../../types/UITypes';
 import { ArrowDownSvg } from '../../../__assets/ArrorDownSVG';
 import { Fade } from '@material-ui/core';
 import { MOCKS } from '../../../__tests__/mocks';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface SectionProps {
   label?: string;
@@ -22,7 +23,10 @@ interface SectionState {
   lastRender: Date;
 }
 
-class Section extends React.Component<SectionProps, SectionState> {
+class Section extends React.Component<
+  RouteComponentProps<{}> & SectionProps,
+  SectionState
+> {
   state = {
     fade: false, // for initial fade in animation
     expanded: false,
@@ -37,6 +41,11 @@ class Section extends React.Component<SectionProps, SectionState> {
     this.setState({ fade: true });
   }
 
+  onStreamClick = (stream: Stream | DummyStream): void => {
+    console.log('stream', stream, 'props', this.props);
+    this.props.history.push(`${stream.user_name}`);
+  };
+
   render() {
     const { fade, expanded } = this.state;
     const { label, streams, loading } = this.props;
@@ -46,7 +55,6 @@ class Section extends React.Component<SectionProps, SectionState> {
     const articleElem = document.getElementById('article');
 
     const dummyStreams: Array<DummyStream> = MOCKS.STREAMS;
-    console.log('streams', streams, 'isEmpty(streams)', isEmpty(streams));
     return (
       <Fade in={fade}>
         <SectionContainer>
@@ -66,6 +74,9 @@ class Section extends React.Component<SectionProps, SectionState> {
                       key={`stream-${idx}`}
                       stream={stream}
                       loading={loading}
+                      onClick={() =>
+                        !isEmpty(streams) && this.onStreamClick(stream)
+                      }
                     />
                   )
                 );
@@ -89,6 +100,7 @@ class Section extends React.Component<SectionProps, SectionState> {
                         key={`stream-${idx}`}
                         stream={stream}
                         loading={loading}
+                        onClick={() => this.onStreamClick(stream)}
                       />
                     )
                   );
@@ -184,4 +196,5 @@ const ShowMoreLine = styled.p`
   }
 `;
 
-export default Section;
+// @ts-ignore
+export default withRouter(Section);

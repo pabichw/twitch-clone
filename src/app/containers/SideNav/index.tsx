@@ -18,6 +18,7 @@ interface SideNavState {
 interface SideNavProps {
   isOpened: boolean;
   onToggle: () => void;
+  getStreams: () => void;
   streams: Array<Stream>;
 }
 
@@ -27,6 +28,9 @@ class SideNav extends Component<SideNavProps, SideNavState> {
   };
 
   componentDidMount() {
+    const { getStreams } = this.props;
+    getStreams();
+
     const { isMobile } = this.state;
     window.addEventListener('resize', () => {
       if (!isMobile && window.innerWidth < sizes.medium) {
