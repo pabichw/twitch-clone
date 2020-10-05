@@ -9,7 +9,10 @@ import { ChannelsList } from './components/ChannelsList';
 import { connect } from 'react-redux';
 import { RootState } from '../../../types';
 import { getStreams } from '../../../store/home/actions';
-import { Stream } from '../../../types/Twitch';
+import { Channel, Stream } from '../../../types/Twitch';
+import CameraSvg from '../../__assets/CameraSvg';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { channelRoutingName } from '../../../utils/other';
 
 interface SideNavState {
   isMobile: Boolean;
@@ -22,10 +25,17 @@ interface SideNavProps {
   streams: Array<Stream>;
 }
 
-class SideNav extends Component<SideNavProps, SideNavState> {
-  state = {
-    isMobile: false,
-  };
+class SideNav extends Component<
+  RouteComponentProps<{}> & SideNavProps,
+  SideNavState
+> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMobile: window.innerWidth < sizes.medium,
+    };
+  }
 
   componentDidMount() {
     const { getStreams } = this.props;
@@ -47,18 +57,21 @@ class SideNav extends Component<SideNavProps, SideNavState> {
     onToggle();
   };
 
+  handleChannelClick = (ch: Channel): void => {
+    const { history } = this.props;
+    history.push(`/${channelRoutingName(ch)}`);
+  };
+
   render() {
     const { isMobile } = this.state;
     const { isOpened, streams } = this.props;
 
-    const channels = streams.slice(0, 10); //because there is no channels-specific endpoint available
+    const channels = streams && streams.slice(0, 10); //because there is no channels-specific endpoint available
 
     return (
       <Aside isOpened={isOpened && !isMobile}>
-        {isMobile ? (
-          <MobileContent />
-        ) : (
-          <Content>
+        <Content>
+          {!isMobile && (
             <CollapseBtnWrapper r={isOpened ? '10px' : '5px'}>
               <Button
                 type={BUTTON.TRANSPARENT}
@@ -70,10 +83,15 @@ class SideNav extends Component<SideNavProps, SideNavState> {
                 onClick={this.handleCollapse}
               />
             </CollapseBtnWrapper>
-            {isOpened && <Header>Recommended channels</Header>}
-            <ChannelsList channels={channels} collapsed={!isOpened} />
-          </Content>
-        )}
+          )}
+          {isOpened && <Header>Recommended channels</Header>}
+          <ChannelsList
+            channels={channels}
+            collapsed={!isOpened}
+            isMobile={isMobile}
+            onChannelClick={this.handleChannelClick}
+          />
+        </Content>
       </Aside>
     );
   }
@@ -95,8 +113,6 @@ const Content = styled.div`
   position: relative;
   width: 100%;
 `;
-
-const MobileContent = styled.div``;
 
 type IconWrapProps = {
   rotate?: string;
@@ -135,4 +151,4 @@ const mapDispatch = {
   getStreams,
 };
 
-export default connect(mapState, mapDispatch)(SideNav);
+export default withRouter(connect(mapState, mapDispatch)(SideNav));

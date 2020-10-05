@@ -7,12 +7,14 @@ import AnonUserContainer from './components/AnonUserContainer';
 type AuthNavProps = {
   auth: AuthStore;
   signIn: (SignInCredentials) => void;
+  isMobile: boolean;
 };
 
 class AuthNav extends Component<AuthNavProps> {
   render() {
     const {
       auth: { isUserAuthenticated },
+      isMobile,
     } = this.props;
 
     return (
@@ -27,6 +29,7 @@ class AuthNav extends Component<AuthNavProps> {
               this.props.signIn({ email: 'dupa', password: 'zyrafydoszafy' });
             }}
             onSignUpClick={() => console.log('on sign up')}
+            isMobile={isMobile}
           />
         )}
       </div>

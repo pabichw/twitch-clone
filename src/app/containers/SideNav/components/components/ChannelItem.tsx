@@ -10,9 +10,14 @@ import { getImageOfSize } from '../../../../../utils/other';
 interface ChannelItemProps {
   content: Channel;
   minimized: boolean;
+  onClick: () => void;
 }
 
-const ChannelItem: React.FC<ChannelItemProps> = ({ content, minimized }) => {
+const ChannelItem: React.FC<ChannelItemProps> = ({
+  content,
+  minimized,
+  onClick,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -32,9 +37,9 @@ const ChannelItem: React.FC<ChannelItemProps> = ({ content, minimized }) => {
   }, [content, dispatch]);
 
   return (
-    <Container>
+    <Container onClick={onClick}>
       {isLoading && !minimized ? (
-        'Loading'
+        'Loading...'
       ) : user ? (
         <Content user={user} collapsed={minimized} />
       ) : (

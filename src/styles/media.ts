@@ -24,6 +24,8 @@ export const sizes = {
   xlarge: 1920,
 };
 
+export const MOBILE_BREAKPOINT = sizes.small;
+
 // Iterate through the sizes and create a media template
 export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce(
   (acc, label) => {

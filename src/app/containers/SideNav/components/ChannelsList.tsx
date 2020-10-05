@@ -2,20 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import ChannelItem from './components/ChannelItem';
 import { Channel } from '../../../../types/Twitch';
+import CameraSvg from '../../../__assets/CameraSvg';
 
 interface ChannelsListProps {
   channels: Array<Channel>;
   collapsed: boolean;
+  isMobile: Boolean;
+  onChannelClick: (ch: Channel) => void;
 }
 
 export const ChannelsList: React.FC<ChannelsListProps> = ({
   channels,
   collapsed,
+  isMobile,
+  onChannelClick,
 }) => {
   return (
-    <List mt={collapsed ? '50px' : '0px'}>
+    <List mt={collapsed && !isMobile ? '50px' : isMobile ? '10px' : '0px'}>
+      {isMobile && (
+        <CameraIconWrap>
+          <CameraSvg />
+        </CameraIconWrap>
+      )}
       {channels.map(ch => (
-        <ChannelItem content={ch} minimized={collapsed} />
+        <ChannelItem
+          content={ch}
+          minimized={collapsed}
+          onClick={() => onChannelClick(ch)}
+        />
       ))}
     </List>
   );
@@ -29,4 +43,10 @@ const List = styled.ul`
   list-style: none;
   padding-left: 0px;
   margin-top: ${(props: ListProps) => props.mt};
+`;
+
+const CameraIconWrap = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 5px 10px;
 `;

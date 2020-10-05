@@ -5,6 +5,7 @@ import TwitchVideoEmbed from './components/TwitchVideoEmbed';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import TwitchChatEmbed from './components/TwitchChatEmbed';
+import { MOBILE_BREAKPOINT } from '../../../styles/media';
 
 interface RouterProps {
   id: string | undefined;
@@ -56,6 +57,10 @@ class StreamPage extends React.Component<
 
 const Content = styled.div`
   display: flex;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    flex-direction: column;
+  }
 `;
 const Main = styled.main`
   flex: 1;

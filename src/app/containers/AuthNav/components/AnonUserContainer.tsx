@@ -1,32 +1,43 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
 import Button from '../../../components/Button';
 import ProfileSVG from '../../../__assets/ProfileSVG';
 import { BUTTON } from '../../../../types/UITypes';
+import MoreSvg from '../../../__assets/MoreSvg';
+import styled from 'styled-components';
 
 type AnonUserContainerProps = {
   onProfileIconClick: () => void;
   onSignInClick: () => void;
   onSignUpClick: () => void;
+  isMobile: boolean;
 };
 
 const AnonUserContainer: FunctionComponent<AnonUserContainerProps> = ({
   onProfileIconClick,
   onSignInClick,
   onSignUpClick,
+  isMobile,
 }) => (
   <Container>
-    <Button type={BUTTON.SECONDARY} text="Log In" onClick={onSignInClick} />
-    <Button type={BUTTON.PRIMARY} text="Sign Up" onClick={onSignUpClick} />
-    <Button
-      type={BUTTON.TRANSPARENT}
-      icon={
-        <IconWrap>
-          <ProfileSVG />
-        </IconWrap>
-      }
-      onClick={onProfileIconClick}
-    />
+    {isMobile ? (
+      <MoreWrapper>
+        <Button type={BUTTON.TRANSPARENT} icon={<MoreSvg />} />
+      </MoreWrapper>
+    ) : (
+      <>
+        <Button type={BUTTON.SECONDARY} text="Log In" onClick={onSignInClick} />
+        <Button type={BUTTON.PRIMARY} text="Sign Up" onClick={onSignUpClick} />
+        <Button
+          type={BUTTON.TRANSPARENT}
+          icon={
+            <IconWrap>
+              <ProfileSVG />
+            </IconWrap>
+          }
+          onClick={onProfileIconClick}
+        />
+      </>
+    )}
   </Container>
 );
 
@@ -40,5 +51,7 @@ const IconWrap = styled.div`
   height: 20px;
   width: 20px;
 `;
+
+const MoreWrapper = styled.div``;
 
 export default AnonUserContainer;

@@ -10,6 +10,7 @@ import { ArrowDownSvg } from '../../../__assets/ArrorDownSVG';
 import { Fade } from '@material-ui/core';
 import { MOCKS } from '../../../__tests__/mocks';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { MOBILE_BREAKPOINT } from '../../../../styles/media';
 
 interface SectionProps {
   label?: string;
@@ -27,11 +28,14 @@ class Section extends React.Component<
   RouteComponentProps<{}> & SectionProps,
   SectionState
 > {
-  state = {
-    fade: false, // for initial fade in animation
-    expanded: false,
-    lastRender: new Date(), // just to force rerendering on resize
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fade: false, // for initial fade in animation
+      expanded: false,
+      lastRender: new Date(), // just to force rerendering on resize
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('resize', () => {
@@ -42,15 +46,16 @@ class Section extends React.Component<
   }
 
   onStreamClick = (stream: Stream | DummyStream): void => {
-    console.log('stream', stream, 'props', this.props);
-    this.props.history.push(`${stream.user_name}`);
+    this.props.history.push(encodeURI(`${stream.user_name}`));
   };
 
   render() {
     const { fade, expanded } = this.state;
     const { label, streams, loading } = this.props;
 
-    const minPxWidthForStream = 300;
+    const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+    const minPxWidthForStream = isMobile ? 100 : 300;
+    const magicNumber = isMobile ? 150 : 100;
     const sectionId = `stream-row-${label}`;
     const articleElem = document.getElementById('article');
 
@@ -65,7 +70,7 @@ class Section extends React.Component<
                 let isTooNarrow;
                 if (articleElem) {
                   isTooNarrow =
-                    articleElem.offsetWidth - 100 <
+                    articleElem.offsetWidth - magicNumber <
                     (minPxWidthForStream - 10) * (idx + 1); // min - padding left/right
                 }
                 return (

@@ -10,6 +10,7 @@ import {
 } from '../../../components/LoadingPlaceholder';
 import { Fade } from '@material-ui/core';
 import { Clickable } from '../../../components/Clickable/Clickable';
+import { MOBILE_BREAKPOINT } from '../../../../styles/media';
 
 type StreamThumbnailProps = {
   stream: Stream | DummyStream;
@@ -85,6 +86,10 @@ const Container = styled.div`
 
   :last-child {
     padding-right: 0;
+  }
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    min-width: 150px;
   }
 `;
 

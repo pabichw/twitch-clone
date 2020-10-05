@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { fontSizes } from '../../../styles/themes';
-import { sizes } from '../../../styles/media';
+import { MOBILE_BREAKPOINT, sizes } from '../../../styles/media';
+import MusicSvg from '../../__assets/MusicSvg';
+import HeartSvg from '../../__assets/HeartSvg';
+import TrophySvg from '../../__assets/TrophySvg';
 
 const cats = [
-  { label: 'Browse', href: '/directory/' },
-  { label: 'Esports', href: '/directory/esports' },
-  { label: 'Music', href: '/directory/music' },
+  { label: 'Browse', href: '/directory/', icon: <HeartSvg /> },
+  { label: 'Esports', href: '/directory/esports', icon: <TrophySvg /> },
+  { label: 'Music', href: '/directory/music', icon: <MusicSvg /> },
 ];
 
-class Categories extends Component {
+interface CategoriesProps {
+  isMobile?: boolean;
+}
+
+class Categories extends Component<CategoriesProps> {
   render() {
+    const { isMobile } = this.props;
     return (
       <List>
-        {cats.map(cat => (
-          <Category>{cat.label}</Category>
-        ))}
+        {cats.map(cat =>
+          isMobile ? (
+            <MobileCategory>{cat.icon}</MobileCategory>
+          ) : (
+            <Category>{cat.label}</Category>
+          ),
+        )}
       </List>
     );
   }
@@ -41,8 +53,21 @@ const Category = styled.li`
     color: var(--primary);
   }
 
-  @media only screen and (max-width: ${sizes.medium}px) {
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     font-size: ${fontSizes.regular2};
+  }
+`;
+
+const MobileCategory = styled.li`
+  padding: 0 20px;
+  cursor: pointer;
+
+  :first-child {
+    border-right: 1px solid var(--separator-color);
+  }
+
+  &:hover {
+    color: var(--primary);
   }
 `;
 

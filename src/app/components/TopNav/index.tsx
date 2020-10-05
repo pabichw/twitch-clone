@@ -4,31 +4,47 @@ import TwitchLogo from '../TwitchLogo';
 import Categories from './Categories';
 import AuthNav from '../../containers/AuthNav';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { MOBILE_BREAKPOINT, sizes } from '../../../styles/media';
 
 type TopNavProps = {};
 
 type TopNavState = {
-  isLoggedIn: Boolean;
+  isMobile: boolean;
 };
 
 class TopNav extends Component<
   RouteComponentProps<{}> & TopNavProps,
   TopNavState
 > {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMobile: window.innerWidth < MOBILE_BREAKPOINT,
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', () => {
+      this.setState({ isMobile: window.innerWidth < MOBILE_BREAKPOINT });
+    });
+  }
+
   twitchLogoClick = () => {
     this.props.history.push('/');
   };
 
   render() {
+    const { isMobile } = this.state;
     return (
       <Nav>
         <Left>
           <TwitchLogo onClick={this.twitchLogoClick} />
-          <Categories />
+          <Categories isMobile={isMobile} />
         </Left>
-        <Center>Search</Center>
+        {/*<Center>Search</Center>*/}
         <Right>
-          <AuthNav />
+          <AuthNav isMobile={isMobile} />
         </Right>
       </Nav>
     );
