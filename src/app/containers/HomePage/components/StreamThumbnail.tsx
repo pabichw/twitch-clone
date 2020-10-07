@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { DummyStream, Stream } from '../../../../types/Twitch';
+import { DummyStream, Game, Stream, StreamTag } from '../../../../types/Twitch';
 import styled from 'styled-components';
 import { getImageOfSize } from '../../../../utils/other';
 import { fontSizes, fontWeights } from '../../../../styles/themes';
@@ -11,6 +11,9 @@ import {
 import { Fade } from '@material-ui/core';
 import { Clickable } from '../../../components/Clickable/Clickable';
 import { MOBILE_BREAKPOINT } from '../../../../styles/media';
+import { useDispatch } from 'react-redux';
+import { getGame, getStreamTags } from '../../../../store/sidenav/actions';
+import isEmpty from 'lodash/isEmpty';
 
 type StreamThumbnailProps = {
   stream: Stream | DummyStream;
@@ -23,8 +26,37 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   loading,
   onClick,
 }) => {
-  const [fade, setFade] = useState(false);
+  const [fade, setFade] = useState<boolean>(false);
+  const [game, setGame] = useState<Game | null>(null);
+  const [streamTags, setStreamTags] = useState<Array<StreamTag> | []>([]);
+
+  const dispatch = useDispatch();
+
   useEffect(() => setFade(true), []);
+  useEffect(() => {
+    dispatch(
+      getGame({
+        id: stream.game_id,
+        onSuccess: game => {
+          setGame(game);
+        },
+      }),
+    );
+  }, [dispatch, stream.game_id]);
+  useEffect(() => {
+    dispatch(
+      getStreamTags({
+        id: stream.user_id,
+        onSuccess: tags => {
+          setStreamTags(tags);
+        },
+      }),
+    );
+  }, [dispatch, stream.game_id, stream.id, stream.user_id]);
+
+  const gameLoaded = !!game;
+  const streamTagsLoaded = !isEmpty(streamTags);
+  console.log('streamTags', streamTags);
 
   return (
     <Fade in={fade}>
@@ -39,7 +71,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
           )}
         </Top>
         <Bottom>
-          {loading ? (
+          {loading || !gameLoaded || !streamTagsLoaded ? (
             <LoadingPlaceholder type={Placeholder.STREAM_BOTTOM} />
           ) : (
             <>
@@ -50,14 +82,16 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
                 <Subtitle>{stream.user_name}</Subtitle>
               </Clickable>
               <Clickable>
-                <Subtitle>{stream.game_id}</Subtitle>
+                <Subtitle>{game!.name}</Subtitle>
               </Clickable>
-              {stream.tag_ids && (
+              {!isEmpty(streamTags) && (
                 <TagsContainer>
-                  {stream.tag_ids.map(tag => (
+                  {/*
+                    // @ts-ignore */}
+                  {streamTags.map((tag: StreamTag) => (
                     <Chip
-                      key={`chip-${tag}`}
-                      text={tag}
+                      key={`chip-${tag.localization_names['en-us']}`}
+                      text={tag.localization_names['en-us']}
                       onClick={console.log}
                     />
                   ))}
@@ -128,10 +162,6 @@ const Subtitle = styled.p`
 
 const TagsContainer = styled.div`
   display: flex;
-
-  :first-child {
-    margin-left: 0;
-  }
 `;
 
 const Top = styled.div`

@@ -1,8 +1,15 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { getUserComplete, getUserError } from './actions';
+import {
+  getGameComplete,
+  getGameError,
+  getStreamTagsComplete,
+  getStreamTagsError,
+  getUserComplete,
+  getUserError,
+} from './actions';
 import api from '../../utils/api';
 import { apiConfig } from '../../config/apiConfig';
-import { GET_USER } from './types';
+import { GET_GAME, GET_STREAM_TAGS, GET_USER } from './types';
 
 const { ROOT_URL } = apiConfig;
 
@@ -21,6 +28,36 @@ export function* getUserFlow({
   }
 }
 
+export function* getGameFlow({ payload: { onSuccess, id } }: ReturnType<any>) {
+  try {
+    const {
+      data: { data },
+    } = yield call(() => api.get(`${ROOT_URL}/games?id=${id}`));
+    const game = data[0];
+    yield put(getGameComplete(game));
+    yield call(onSuccess(game));
+  } catch (err) {
+    yield put(getGameError(err));
+  }
+}
+
+export function* getStreamTagsFlow({
+  payload: { onSuccess, id },
+}: ReturnType<any>) {
+  try {
+    const {
+      data: { data },
+    } = yield call(() => api.get(`${ROOT_URL}/streams/tags?id=${id}`));
+    const streamTags = data;
+    yield put(getStreamTagsComplete(streamTags));
+    yield call(onSuccess(streamTags));
+  } catch (err) {
+    yield put(getStreamTagsError(err));
+  }
+}
+
 export function* sideNavSaga() {
   yield takeEvery(GET_USER, getUserFlow);
+  yield takeEvery(GET_GAME, getGameFlow);
+  yield takeEvery(GET_STREAM_TAGS, getStreamTagsFlow);
 }

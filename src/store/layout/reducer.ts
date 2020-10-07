@@ -1,7 +1,8 @@
 import { TOGGLE_SIDE_NAV, LayoutActionTypes, LayoutStore } from './types';
+import { LS_KEYS } from '../../config/localStorageKeys';
 
 const initialState: LayoutStore = {
-  isSideNavCollapsed: false,
+  isSideNavCollapsed: !!localStorage.getItem(LS_KEYS.IS_SIDE_NAV_COLLAPSED),
 };
 
 export default (

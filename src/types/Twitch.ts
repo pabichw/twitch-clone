@@ -30,6 +30,7 @@ export type Channel = {
 
 export type User = {
   id: string;
+  user_id: string;
   login: string;
   display_name: string;
   type: string;
@@ -41,7 +42,22 @@ export type User = {
   email: Email;
 };
 
+export type Game = {
+  id: string;
+  box_art_url: string;
+  name: string;
+};
+
+export type StreamTag = {
+  tag_id: string;
+  is_auto: boolean;
+  localization_names: object;
+  localization_descriptions: object;
+};
+
 export type DummyStream = {
+  id: string;
+  user_id: string;
   title: string;
   thumbnail_url: string;
   user_name: string;

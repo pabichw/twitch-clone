@@ -9,7 +9,7 @@ type ChipProps = {
   text?: string;
 };
 
-const Chip: FunctionComponent<ChipProps> = ({ onClick, text, color }) => {
+const Chip: FunctionComponent<ChipProps> = ({ onClick, text }) => {
   return <Container onClick={onClick}>{text}</Container>;
 };
 
@@ -23,7 +23,7 @@ const Container = styled.button`
   height: 20px;
   min-width: 30px;
   padding: 0 8px;
-  margin: 2px;
+  margin: 2px 2px 2px 0;
   border-radius: 8px;
   font-weight: ${fontWeights.bold};
   font-size: ${fontSizes.small};
