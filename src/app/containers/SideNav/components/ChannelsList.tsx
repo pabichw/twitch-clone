@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ChannelItem from './components/ChannelItem';
 import { Channel } from '../../../../types/Twitch';
 import CameraSvg from '../../../__assets/CameraSvg';
+import { MOCKS } from '../../../__tests__/mocks';
 
 interface ChannelsListProps {
   channels: Array<Channel>;
@@ -24,7 +25,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({
           <CameraSvg />
         </CameraIconWrap>
       )}
-      {channels.map(ch => (
+      {(channels || MOCKS.STREAMS).map(ch => (
         <ChannelItem
           content={ch}
           minimized={collapsed}
