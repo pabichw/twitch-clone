@@ -1,4 +1,4 @@
-import { Stream, User } from './Twitch';
+import { Broadcaster, Stream, User } from './Twitch';
 
 export type APIError = string;
 
@@ -14,6 +14,10 @@ export type GetAppTokenResponse = ApiResponse & {
 
 export type GetStreamsResponse = ApiResponse & {
   data: Array<Stream>;
+};
+
+export type GetBroadcasterResponse = ApiResponse & {
+  data: Array<Broadcaster>;
 };
 
 export type GetUserResponse = ApiResponse & {

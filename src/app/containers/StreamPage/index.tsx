@@ -6,12 +6,19 @@ import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import TwitchChatEmbed from './components/TwitchChatEmbed';
 import { MOBILE_BREAKPOINT } from '../../../styles/media';
+import { getBroadcaster } from '../../../store/streamPage/actions';
+import { Broadcaster, Stream } from '../../../types/Twitch';
+import BroadcasterInfo from './components/BroadcasterInfo';
 
 interface RouterProps {
   id: string | undefined;
 }
 
-interface StreamPageProps {}
+interface StreamPageProps {
+  getBroadcaster: ({ login: string }) => void;
+  stream: Stream;
+  broadcaster: Broadcaster;
+}
 
 interface StreamPageState {
   isMobile: boolean;
@@ -29,24 +36,27 @@ class StreamPage extends React.Component<
     };
   }
   async componentDidMount() {
-    const { match } = this.props;
     window.addEventListener('resize', () => {
       this.setState({ isMobile: window.innerWidth < MOBILE_BREAKPOINT });
     });
-    console.log('match', match);
+    const { match, getBroadcaster } = this.props;
+    // @ts-ignore
+    const {
+      params: { id },
+    } = match;
+    await getBroadcaster({ login: id });
   }
 
   render() {
-    const { match } = this.props;
+    const { match, stream, broadcaster } = this.props;
     const { isMobile } = this.state;
     // @ts-ignore
     const { id } = match.params;
 
     const { hostname } = window.location;
-    const url = `https://player.twitch.tv/?channel=${id}&parent=${hostname}`;
+    const urlVideo = `https://player.twitch.tv/?channel=${id}&parent=${hostname}`;
     const urlChat = `https://www.twitch.tv/embed/${id}/chat?parent=${hostname}&darkpopout`;
 
-    console.log('props', this.props);
     return (
       <Page
         htmlProps={{ id: 'page-stream' }}
@@ -58,7 +68,12 @@ class StreamPage extends React.Component<
       >
         <Content>
           <Main>
-            <TwitchVideoEmbed url={url} />
+            <TwitchVideoEmbed url={urlVideo} />
+            {broadcaster && stream && (
+              <StreamInfoWrapper>
+                <BroadcasterInfo broadcaster={broadcaster} stream={stream} />
+              </StreamInfoWrapper>
+            )}
           </Main>
           {!isMobile && (
             <RightCol>
@@ -78,6 +93,7 @@ const Content = styled.div`
     flex-direction: column;
   }
 `;
+
 const Main = styled.main`
   flex: 1;
 `;
@@ -86,7 +102,18 @@ const RightCol = styled.div`
   width: 340px;
   height: calc(100vh - 50px);
 `;
-const mapState = () => ({});
-const mapDispatch = {};
+
+const StreamInfoWrapper = styled.div`
+  margin: 20px;
+`;
+
+const mapState = state => ({
+  stream: state.streamPage.stream,
+  broadcaster: state.streamPage.broadcaster,
+});
+
+const mapDispatch = {
+  getBroadcaster,
+};
 
 export default connect(mapState, mapDispatch)(StreamPage);

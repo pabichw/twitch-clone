@@ -55,6 +55,8 @@ export type StreamTag = {
   localization_descriptions: object;
 };
 
+export type Broadcaster = User;
+
 export type DummyStream = {
   id: string;
   user_id: string;

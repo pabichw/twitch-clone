@@ -4,11 +4,13 @@ import auth from './auth/reducer';
 import home from './home/reducer';
 import layout from './layout/reducer';
 import sideNav from './sidenav/reducer';
+import streamPage from './streamPage/reducer';
 
 export function createReducer() {
   return combineReducers({
     auth,
     home,
+    streamPage,
     layout,
     sideNav,
   });
