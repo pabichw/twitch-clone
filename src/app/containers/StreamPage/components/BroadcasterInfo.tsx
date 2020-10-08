@@ -57,8 +57,8 @@ const AvatarWrapper = styled.div`
     content: '';
     position: absolute;
     z-index: 1;
-    top: -4px;
-    left: -4px;
+    top: -3px;
+    left: -3px;
     width: 72px;
     height: 72px;
     border-radius: 50%;
@@ -106,7 +106,7 @@ const Subtitle = styled.p`
   font-size: ${fontSizes.regular2};
   font-weight: ${fontWeights.bold};
   margin-top: 5px;
-  line-height: 10px;
+  line-height: 17px;
 `;
 
 const HighlightedSubtitle = styled.a`
