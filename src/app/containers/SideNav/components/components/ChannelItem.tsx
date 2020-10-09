@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Channel, User } from '../../../../../types/Twitch';
 
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../../../../store/sidenav/actions';
 import { fontSizes, fontWeights } from '../../../../../styles/themes';
 import { getImageOfSize } from '../../../../../utils/other';
+import {
+  LoadingPlaceholder,
+  Placeholder,
+} from '../../../../components/Placeholders/LoadingPlaceholder';
+import styled from 'styled-components';
 
 interface ChannelItemProps {
   content: Channel;
@@ -36,10 +40,16 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
     );
   }, [content, dispatch]);
 
+  console.log('user', user);
+
   return (
     <Container onClick={onClick}>
-      {isLoading && !minimized ? (
-        'Loading...'
+      {isLoading ? (
+        minimized ? (
+          <LoadingPlaceholder type={Placeholder.SIDEBAR_ITEM_COLLAPSED} />
+        ) : (
+          <LoadingPlaceholder type={Placeholder.SIDEBAR_ITEM} />
+        )
       ) : user ? (
         <Content user={user} collapsed={minimized} />
       ) : (

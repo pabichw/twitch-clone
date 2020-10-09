@@ -19,8 +19,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({
   onChannelClick,
 }) => {
   return (
-    <List mt={collapsed && !isMobile ? '50px' : isMobile ? '10px' : '0px'}>
-      {isMobile && (
+    <List mt={collapsed && !isMobile ? '50px' : isMobile ? '2px' : '0px'}>
+      {collapsed && (
         <CameraIconWrap>
           <CameraSvg />
         </CameraIconWrap>

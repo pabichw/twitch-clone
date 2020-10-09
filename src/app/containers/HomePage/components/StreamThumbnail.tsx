@@ -7,7 +7,7 @@ import Chip from '../../../components/Chip';
 import {
   LoadingPlaceholder,
   Placeholder,
-} from '../../../components/LoadingPlaceholder';
+} from '../../../components/Placeholders/LoadingPlaceholder';
 import { Fade } from '@material-ui/core';
 import { Clickable } from '../../../components/Clickable/Clickable';
 import { MOBILE_BREAKPOINT } from '../../../../styles/media';

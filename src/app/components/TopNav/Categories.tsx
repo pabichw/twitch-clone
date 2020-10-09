@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { fontSizes } from '../../../styles/themes';
-import { MOBILE_BREAKPOINT } from '../../../styles/media';
+import { fontSizes, fontWeights } from '../../../styles/themes';
+import { MOBILE_BREAKPOINT, sizes } from '../../../styles/media';
 import MusicSvg from '../../__assets/MusicSvg';
 import HeartSvg from '../../__assets/HeartSvg';
 import TrophySvg from '../../__assets/TrophySvg';
@@ -43,6 +43,7 @@ const Category = styled.li`
   line-height: 1.5rem;
   padding: 0 20px;
   font-size: ${fontSizes.big};
+  font-weight: ${fontWeights.bold};
   cursor: pointer;
 
   :first-child {
@@ -53,7 +54,7 @@ const Category = styled.li`
     color: var(--primary);
   }
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+  @media only screen and (max-width: ${sizes.large}px) {
     font-size: ${fontSizes.regular2};
   }
 `;
