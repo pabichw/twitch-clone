@@ -14,6 +14,7 @@ import { RootState } from '../types';
 import { toggleSideNav } from '../store/layout/actions';
 import { MainLoader } from './components/MainLoader';
 import StreamPage from './containers/StreamPage';
+import { MOBILE_BREAKPOINT } from '../styles/media';
 
 interface AppProps {
   getAppToken: () => void;
@@ -24,10 +25,29 @@ interface AppProps {
   toggleSideNav: () => void;
 }
 
-class App extends React.Component<AppProps> {
+interface AppState {
+  isMobile: boolean;
+}
+
+class App extends React.Component<AppProps, AppState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: window.innerWidth < MOBILE_BREAKPOINT,
+    };
+  }
   async componentDidMount() {
     const { getAppToken } = this.props;
     await getAppToken();
+
+    window.addEventListener('resize', () => {
+      const { isMobile } = this.state;
+      if (!isMobile && window.innerWidth < MOBILE_BREAKPOINT) {
+        this.setState({ isMobile: true });
+      } else {
+        this.setState({ isMobile: false });
+      }
+    });
   }
 
   handleOnToggle = () => {
@@ -36,6 +56,7 @@ class App extends React.Component<AppProps> {
   };
 
   render() {
+    const { isMobile } = this.state;
     const { appToken, fetchingAppToken, isSideNavCollapsed } = this.props;
 
     const showMainLoader = fetchingAppToken;
@@ -54,7 +75,7 @@ class App extends React.Component<AppProps> {
               <Article
                 id="article"
                 maxWidth={`calc(100% - ${
-                  isSideNavCollapsed ? '50px' : '240px'
+                  isSideNavCollapsed || isMobile ? '50px' : '240px'
                 })`}
               >
                 {appToken && (
