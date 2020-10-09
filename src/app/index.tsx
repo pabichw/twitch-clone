@@ -85,11 +85,10 @@ const Main = styled.main`
 type ArticleProps = {
   maxWidth: string;
 };
+
 const Article = styled.article`
   flex: 1;
   max-width: ${(props: ArticleProps) => props.maxWidth};
-  height: calc(100vh - 50px);
-  overflow-y: scroll;
 `;
 
 const mapState = (state: RootState) => ({

@@ -9,6 +9,7 @@ import { MOBILE_BREAKPOINT } from '../../../styles/media';
 import { getBroadcaster } from '../../../store/streamPage/actions';
 import { Broadcaster, Stream } from '../../../types/Twitch';
 import BroadcasterInfo from './components/BroadcasterInfo';
+import StylingUtils from '../../../utils/stylingUtils';
 
 interface RouterProps {
   id: string | undefined;
@@ -96,6 +97,10 @@ const Content = styled.div`
 
 const Main = styled.main`
   flex: 1;
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+
+  ${StylingUtils.hideScrollbar()}
 `;
 
 const RightCol = styled.div`
