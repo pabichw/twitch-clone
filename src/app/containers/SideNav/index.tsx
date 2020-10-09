@@ -14,7 +14,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { channelRoutingName } from '../../../utils/other';
 
 interface SideNavState {
-  isMobile: Boolean;
+  isMobile: boolean;
 }
 
 interface SideNavProps {
@@ -83,10 +83,10 @@ class SideNav extends Component<
               />
             </CollapseBtnWrapper>
           )}
-          {isOpened && <Header>Recommended channels</Header>}
+          {isOpened && !isMobile && <Header>Recommended channels</Header>}
           <ChannelsList
             channels={channels}
-            collapsed={!isOpened}
+            collapsed={!isOpened || isMobile}
             isMobile={isMobile}
             onChannelClick={this.handleChannelClick}
           />
