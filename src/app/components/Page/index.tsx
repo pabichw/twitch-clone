@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Meta } from '../../../types';
 import styled from 'styled-components';
 import Fade from '@material-ui/core/Fade';
+import StylingUtils from '../../../utils/stylingUtils';
 
 type PageProps = {
   htmlProps?: object;
@@ -32,6 +33,11 @@ const Page: FunctionComponent<PageProps> = ({
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+
+  ${StylingUtils.hideScrollbar()}
+`;
 
 export default Page;

@@ -162,6 +162,7 @@ const Subtitle = styled.p`
 
 const TagsContainer = styled.div`
   display: flex;
+  flex-wrap: no-wrap;
 `;
 
 const Top = styled.div`

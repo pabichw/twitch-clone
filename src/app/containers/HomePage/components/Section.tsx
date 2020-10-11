@@ -137,6 +137,10 @@ const StreamsRow = styled.div`
   max-width: 100%;
   flex: 1;
   padding-bottom: 20px;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    flex-direction: column;
+  }
 `;
 
 const Label = styled.span`

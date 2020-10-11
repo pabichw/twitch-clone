@@ -58,6 +58,7 @@ class StreamPage extends React.Component<
     const urlVideo = `https://player.twitch.tv/?channel=${id}&parent=${hostname}`;
     const urlChat = `https://www.twitch.tv/embed/${id}/chat?parent=${hostname}&darkpopout`;
 
+    console.log('broadcaster', broadcaster, 'stream', stream);
     return (
       <Page
         htmlProps={{ id: 'page-stream' }}
