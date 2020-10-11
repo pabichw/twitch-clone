@@ -2,6 +2,9 @@
 Created using public Twitch API.
 
 <H3>DEMO</H2>
+https://twitch.pabich.cc
+
+or
 https://dreamy-mcclintock-8ba399.netlify.app/
 
 <H3>Install and run</H3>
