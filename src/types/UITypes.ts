@@ -2,4 +2,5 @@ export enum BUTTON {
   TRANSPARENT,
   PRIMARY,
   SECONDARY,
+  FIT_PARENT,
 }

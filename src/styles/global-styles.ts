@@ -7,6 +7,13 @@ const createCssVariables = theme =>
 export const GlobalStyle = createGlobalStyle`
   * {
     ${createCssVariables(themes.DARK)}
+    
+    ::selection {
+      background: var(--primaryLight);
+    }
+    ::-moz-selection {
+      background: var(--primaryLight); /* Gecko Browsers */
+    }
   }
   
   button {

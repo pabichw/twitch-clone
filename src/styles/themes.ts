@@ -35,6 +35,7 @@ type Theme = {
   primaryLight: Color;
   secondary: Color;
   secondaryHover: Color;
+  ['input-background']: Color;
   background: Color;
   navbar: Color;
   sidebar: Color;
@@ -66,6 +67,7 @@ export const themes: Themes = {
     secondary: palette.gray1,
     secondaryHover: palette.gray2,
     background: palette.dark3,
+    'input-background': palette.gray2,
     placeholder: palette.dark2,
     'placeholder-bckg': palette.dark1,
     'placeholder-bckg2': palette.dark2,

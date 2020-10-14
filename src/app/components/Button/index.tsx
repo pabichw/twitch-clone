@@ -24,9 +24,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   return (
     <Container
       onClick={onClick}
-      customPadding={
-        type === BUTTON.TRANSPARENT && icon && !text ? '0' : '0 10px'
-      }
+      padding={type === BUTTON.TRANSPARENT && icon && !text ? '0' : '0 10px'}
       hover={STYLES[type].hover}
       {...STYLES[type]}
       {...(color && { style: { color } })}
@@ -43,7 +41,10 @@ type ContainerProps = {
     background: Color;
   };
   background: Color;
-  customPadding: string;
+  height?: string;
+  width?: string;
+  'border-radius'?: string;
+  padding?: string;
 };
 
 const STYLES = {
@@ -68,6 +69,16 @@ const STYLES = {
       background: 'rgba(255,255,255,0.2)',
     },
   },
+  [BUTTON.FIT_PARENT]: {
+    background: 'transparent',
+    height: '100%',
+    'border-radius': '0px',
+    padding: '0 5px',
+
+    hover: {
+      background: 'rgba(255,255,255,0.2)',
+    },
+  },
 };
 
 const Container = styled.button`
@@ -77,11 +88,12 @@ const Container = styled.button`
   background: ${props => props.background};
   color: var(--font-normal);
   cursor: pointer;
-  height: 30px;
-  min-width: 30px;
-  padding: ${props => props.customPadding};
+  height: ${props => props.height || '30px'};
+  min-width: ${props => props['min-width'] || '30px'};
+  padding: ${props => props.padding || '0 10px'};
+
   margin: 0 5px;
-  border-radius: 4px;
+  border-radius: ${props => props['border-radius'] || '4px'};
   font-weight: ${fontWeights.bold};
   font-size: ${fontSizes.regular};
 

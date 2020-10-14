@@ -5,6 +5,7 @@ import Categories from './Categories';
 import AuthNav from '../../containers/AuthNav';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { MOBILE_BREAKPOINT } from '../../../styles/media';
+import SearchBar from '../SearchBar';
 
 type TopNavProps = {};
 
@@ -34,6 +35,8 @@ class TopNav extends Component<
     this.props.history.push('/');
   };
 
+  handleOnSearch = query => {};
+
   render() {
     const { isMobile } = this.state;
     return (
@@ -42,7 +45,9 @@ class TopNav extends Component<
           <TwitchLogo onClick={this.twitchLogoClick} />
           <Categories isMobile={isMobile} />
         </Left>
-        {/*<Center>Search</Center>*/}
+        <Center>
+          <SearchBar onSearch={this.handleOnSearch} />
+        </Center>
         <Right>
           <AuthNav isMobile={isMobile} />
         </Right>
@@ -78,6 +83,16 @@ const Right = styled.div`
   align-items: center;
   height: 100%;
   width: 407px;
+`;
+
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+
+  @media only screen and (max-width: 864px) {
+    display: none;
+  }
 `;
 
 export default withRouter(TopNav);
