@@ -10,7 +10,7 @@ api.defaults.headers.common['authorization'] = `bearer ${localStorage.getItem(
   LS_KEYS.APP_TOKEN,
 )}`;
 
-const importantErrorStatusCodes = [400, 403];
+const importantErrorStatusCodes = [400, 403, 404];
 const isErrorStatusImportant = (errCode: number): boolean =>
   importantErrorStatusCodes.includes(errCode);
 
