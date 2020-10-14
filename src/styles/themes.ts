@@ -27,6 +27,7 @@ export const palette = {
   twitchPurple: 'rgb(145, 71, 255)',
   twitchPurple2: '#772ce8',
   twitchPurpleLight: 'rgb(169, 112, 255)',
+  dangerRed: 'rgb(233, 25, 22)',
 };
 
 type Theme = {
@@ -53,6 +54,7 @@ type Theme = {
 
   ['main-loader-bckg']: Color;
   ['main-loader-spinner']: Color;
+  ['live-bckg']: Color;
 };
 
 type Themes = {
@@ -82,5 +84,6 @@ export const themes: Themes = {
     'chip-color': palette.whiteTransparent,
     'main-loader-bckg': palette.black,
     'main-loader-spinner': palette.gray1,
+    'live-bckg': palette.dangerRed,
   },
 };

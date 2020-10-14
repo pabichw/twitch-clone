@@ -15,6 +15,7 @@ import { toggleSideNav } from '../store/layout/actions';
 import { MainLoader } from './components/MainLoader';
 import StreamPage from './containers/StreamPage';
 import { MOBILE_BREAKPOINT } from '../styles/media';
+import SearchPage from './containers/SearchPage';
 
 interface AppProps {
   getAppToken: () => void;
@@ -81,6 +82,7 @@ class App extends React.Component<AppProps, AppState> {
                 {appToken && (
                   <Switch>
                     <Route exact path="/" component={HomePage} />
+                    <Route exact path="/search" component={SearchPage} />
                     <Route exact path="/:id" component={StreamPage} />
                   </Switch>
                 )}

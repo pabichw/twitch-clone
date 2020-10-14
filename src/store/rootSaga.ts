@@ -4,6 +4,7 @@ import { homeSaga } from './home/sagas';
 import { streamPageSaga } from './streamPage/sagas';
 import { layoutSaga } from './layout/sagas';
 import { sideNavSaga } from './sidenav/sagas';
+import { searchPageSaga } from './searchPage/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
     layoutSaga(),
     sideNavSaga(),
     streamPageSaga(),
+    searchPageSaga(),
   ]);
 }

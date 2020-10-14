@@ -35,7 +35,10 @@ class TopNav extends Component<
     this.props.history.push('/');
   };
 
-  handleOnSearch = query => {};
+  handleOnSearch = query => {
+    const { history } = this.props;
+    history.push(`/search?query=${query}`);
+  };
 
   render() {
     const { isMobile } = this.state;

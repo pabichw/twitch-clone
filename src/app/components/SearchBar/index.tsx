@@ -27,7 +27,6 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     const { onSearch } = this.props;
 
     if (query) {
-      console.log('asdas', query);
       onSearch(query);
     }
   };

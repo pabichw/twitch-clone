@@ -1,9 +1,10 @@
-import { Broadcaster, Stream, User } from './Twitch';
+import { Broadcaster, ChannelSearchResult, Stream, User } from './Twitch';
 
 export type APIError = string;
 
 export type ApiResponse = {
   data: object;
+  //message: string;
 };
 
 export type GetAppTokenResponse = ApiResponse & {
@@ -22,6 +23,10 @@ export type GetBroadcasterResponse = ApiResponse & {
 
 export type GetUserResponse = ApiResponse & {
   data: Array<User>;
+};
+
+export type GetSearchResultsResponse = ApiResponse & {
+  data: Array<ChannelSearchResult>;
 };
 
 export type AppToken = string;

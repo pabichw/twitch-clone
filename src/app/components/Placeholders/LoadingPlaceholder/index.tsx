@@ -7,6 +7,7 @@ export enum Placeholder {
   VIDEO_FRAME,
   SIDEBAR_ITEM,
   SIDEBAR_ITEM_COLLAPSED,
+  CHANNEL_LIST_ITEM,
 }
 
 interface LoadingPlaceholderProps {
@@ -73,6 +74,24 @@ export const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
             foregroundColor="var(--placeholder-bckg)"
           >
             <circle cx="15" cy="15" r="15" />
+          </ContentLoader>
+        );
+      case Placeholder.CHANNEL_LIST_ITEM:
+        return (
+          <ContentLoader
+            speed={2}
+            width={390}
+            height={73}
+            viewBox="0 0 390 70"
+            backgroundColor="var(--placeholder-bckg)"
+            foregroundColor="var(--placeholder)"
+          >
+            <rect x="89" y="1" rx="3" ry="3" width="153" height="14" />
+            <rect x="90" y="26" rx="3" ry="3" width="86" height="8" />
+            <rect x="90" y="40" rx="3" ry="3" width="100" height="8" />
+            <rect x="90" y="60" rx="3" ry="3" width="59" height="12" />
+            <rect x="158" y="60" rx="3" ry="3" width="59" height="12" />
+            <circle cx="39" cy="36" r="35" />
           </ContentLoader>
         );
       default:
