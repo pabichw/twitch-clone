@@ -14,6 +14,7 @@ import {
   Placeholder,
 } from '../../components/Placeholders/LoadingPlaceholder';
 import ChannelsList from './components/ChannelsList';
+import get from 'lodash/get';
 
 interface RouterProps {
   query: string | undefined;
@@ -42,6 +43,19 @@ class SearchPage extends React.Component<
 
     const { query } = qs.parse(search);
     await getSearchResults({ query });
+  }
+
+  async componentDidUpdate(prevProps) {
+    const prevSearch = get(prevProps, 'location.search');
+    const search = get(this.props, 'location.search');
+
+    const { query: prevQuery } = qs.parse(prevSearch);
+    const { query } = qs.parse(search);
+
+    if (prevQuery !== query) {
+      const { getSearchResults } = this.props;
+      await getSearchResults({ query });
+    }
   }
 
   handleChannelClick = (ch: ChannelSearchResult) => {

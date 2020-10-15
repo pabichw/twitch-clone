@@ -31,6 +31,12 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   };
 
+  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   render() {
     const { query } = this.state;
 
@@ -41,6 +47,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
           placeholder="Search"
           value={query}
           onChange={this.handleQueryChange}
+          onKeyDown={this.handleKeyDown}
         />
         <ButtonWrapper>
           <Button

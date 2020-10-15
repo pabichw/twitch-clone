@@ -10,6 +10,7 @@ import { getBroadcaster } from '../../../store/streamPage/actions';
 import { Broadcaster, Stream } from '../../../types/Twitch';
 import BroadcasterInfo from './components/BroadcasterInfo';
 import StylingUtils from '../../../utils/stylingUtils';
+import get from 'lodash/get';
 
 interface RouterProps {
   id: string | undefined;
@@ -46,6 +47,16 @@ class StreamPage extends React.Component<
       params: { id },
     } = match;
     await getBroadcaster({ login: id });
+  }
+
+  async componentDidUpdate(prevProps) {
+    const prevId = get(prevProps, 'match.params.id');
+    const id = get(this.props, 'match.params.id');
+
+    if (prevId !== id) {
+      const { getBroadcaster } = this.props;
+      await getBroadcaster({ login: id });
+    }
   }
 
   render() {
