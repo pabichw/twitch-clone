@@ -6,6 +6,7 @@ export type LayoutStore = {
 
 interface toggleSideNav {
   type: typeof TOGGLE_SIDE_NAV;
+  payload: boolean;
 }
 
 export type LayoutActionTypes = toggleSideNav;

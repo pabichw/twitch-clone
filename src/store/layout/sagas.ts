@@ -3,9 +3,9 @@ import { TOGGLE_SIDE_NAV } from './types';
 import { selectIsSideNavCollapsed } from './selectors';
 import { LS_KEYS } from '../../config/localStorageKeys';
 
-function* toggleSideNavFlow() {
+function* toggleSideNavFlow({ payload: open }: ReturnType<any>) {
   const prevState = yield select(selectIsSideNavCollapsed);
-  const newState = !prevState;
+  const newState = open || !prevState;
   newState
     ? localStorage.removeItem(LS_KEYS.IS_SIDE_NAV_COLLAPSED)
     : localStorage.setItem(LS_KEYS.IS_SIDE_NAV_COLLAPSED, 'true');

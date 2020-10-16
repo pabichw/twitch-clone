@@ -23,7 +23,7 @@ interface AppProps {
   appToken: AppToken;
   fetchingAppToken: boolean;
   isSideNavCollapsed: boolean;
-  toggleSideNav: () => void;
+  toggleSideNav: any;
 }
 
 interface AppState {
@@ -38,15 +38,17 @@ class App extends React.Component<AppProps, AppState> {
     };
   }
   async componentDidMount() {
-    const { getAppToken } = this.props;
+    const { getAppToken, toggleSideNav } = this.props;
     await getAppToken();
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', async () => {
       const { isMobile } = this.state;
       if (!isMobile && window.innerWidth < MOBILE_BREAKPOINT) {
         this.setState({ isMobile: true });
+        toggleSideNav(false);
       } else {
         this.setState({ isMobile: false });
+        toggleSideNav(true);
       }
     });
   }
@@ -61,6 +63,7 @@ class App extends React.Component<AppProps, AppState> {
     const { appToken, fetchingAppToken, isSideNavCollapsed } = this.props;
 
     const showMainLoader = fetchingAppToken;
+    console.log('isSideNavCollapsed', isSideNavCollapsed, 'isMobile', isMobile);
     return (
       <BrowserRouter>
         <TopNav />
@@ -76,7 +79,7 @@ class App extends React.Component<AppProps, AppState> {
               <Article
                 id="article"
                 maxWidth={`calc(100% - ${
-                  isSideNavCollapsed || isMobile ? '50px' : '240px'
+                  isSideNavCollapsed ? '50px' : '240px'
                 })`}
               >
                 {appToken && (
