@@ -11,6 +11,7 @@ import { Broadcaster, Stream } from '../../../types/Twitch';
 import BroadcasterInfo from './components/BroadcasterInfo';
 import StylingUtils from '../../../utils/stylingUtils';
 import get from 'lodash/get';
+import { LS_KEYS } from '../../../config/localStorageKeys';
 
 interface RouterProps {
   id: string | undefined;
@@ -24,6 +25,7 @@ interface StreamPageProps {
 
 interface StreamPageState {
   isMobile: boolean;
+  isChatCollapsed: boolean;
 }
 
 class StreamPage extends React.Component<
@@ -35,6 +37,7 @@ class StreamPage extends React.Component<
 
     this.state = {
       isMobile: window.innerWidth < MOBILE_BREAKPOINT,
+      isChatCollapsed: !!localStorage.getItem(LS_KEYS.IS_CHAT_COLLAPSED),
     };
   }
   async componentDidMount() {
@@ -59,9 +62,21 @@ class StreamPage extends React.Component<
     }
   }
 
+  onChatToggle = (val: boolean): void => {
+    this.setState((state: StreamPageState) => ({
+      isChatCollapsed: typeof val === 'boolean' ? !val : !state.isChatCollapsed,
+    }));
+
+    if (val) {
+      localStorage.removeItem(LS_KEYS.IS_CHAT_COLLAPSED);
+    } else {
+      localStorage.setItem(LS_KEYS.IS_CHAT_COLLAPSED, 'true');
+    }
+  };
+
   render() {
     const { match, stream, broadcaster } = this.props;
-    const { isMobile } = this.state;
+    const { isMobile, isChatCollapsed } = this.state;
     // @ts-ignore
     const { id } = match.params;
 
@@ -81,16 +96,23 @@ class StreamPage extends React.Component<
       >
         <Content>
           <Main>
-            <TwitchVideoEmbed url={urlVideo} />
+            <TwitchVideoEmbed
+              url={urlVideo}
+              isChatCollapsed={isChatCollapsed}
+              onToggleChat={() => this.onChatToggle(true)}
+            />
             {broadcaster && stream && (
               <StreamInfoWrapper>
                 <BroadcasterInfo broadcaster={broadcaster} stream={stream} />
               </StreamInfoWrapper>
             )}
           </Main>
-          {!isMobile && (
+          {!isMobile && !isChatCollapsed && (
             <RightCol>
-              <TwitchChatEmbed url={urlChat} />
+              <TwitchChatEmbed
+                url={urlChat}
+                onToggle={() => this.onChatToggle(false)}
+              />
             </RightCol>
           )}
         </Content>

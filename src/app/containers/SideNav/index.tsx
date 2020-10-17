@@ -53,6 +53,7 @@ class SideNav extends Component<
 
   handleCollapse = () => {
     const { onToggle } = this.props;
+    debugger;
     onToggle();
   };
 
