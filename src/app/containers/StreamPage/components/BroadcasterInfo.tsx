@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Broadcaster, Stream } from '../../../../types/Twitch';
 import { fontSizes, fontWeights } from '../../../../styles/themes';
+import CircleSVG from '../../../__assets/CircleSVG';
+import ViewsCounter from '../../../components/LiveCounter';
 
 interface BroadcasterInfoProps {
   broadcaster: Broadcaster;
@@ -17,12 +19,16 @@ const BroadcasterInfo: React.FC<BroadcasterInfoProps> = ({
       <Left>
         <AvatarWrapper>
           <Avatar src={broadcaster.profile_image_url} />
+          <CircleSVG />
         </AvatarWrapper>
       </Left>
       <Right>
         <HeaderRow>
           <Title>{broadcaster.display_name}</Title>
-          <ButtonsWrapper />
+          <HeaderRight>
+            <ButtonsWrapper />
+            <ViewsCounter views={broadcaster.view_count} />
+          </HeaderRight>
         </HeaderRow>
         <DescBody>
           <DescriptionContainer>
@@ -62,7 +68,6 @@ const AvatarWrapper = styled.div`
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: linear-gradient(to top, #fff, var(--primary) 24%);
   }
 `;
 
@@ -89,6 +94,10 @@ const HeaderRow = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: flex-end;
+`;
+
+const HeaderRight = styled.div`
+  height: 100%;
 `;
 
 const ButtonsWrapper = styled.div``;

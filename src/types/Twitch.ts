@@ -38,7 +38,7 @@ export type User = {
   description: string;
   profile_image_url: string;
   offline_image_url: string;
-  view_count: Number;
+  view_count: number;
   email: Email;
 };
 
