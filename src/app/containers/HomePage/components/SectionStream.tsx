@@ -24,7 +24,7 @@ interface SectionState {
   lastRender: Date;
 }
 
-class Section extends React.Component<
+class SectionStreams extends React.Component<
   RouteComponentProps<{}> & SectionProps,
   SectionState
 > {
@@ -206,4 +206,4 @@ const ShowMoreLine = styled.p`
 `;
 
 // @ts-ignore
-export default withRouter(Section);
+export default withRouter(SectionStreams);

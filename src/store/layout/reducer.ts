@@ -13,7 +13,6 @@ export default (
   switch (action.type) {
     case TOGGLE_SIDE_NAV:
       const open = get(action, 'payload');
-      debugger;
       return {
         ...state,
         isSideNavCollapsed:

@@ -8,6 +8,7 @@ export enum Placeholder {
   SIDEBAR_ITEM,
   SIDEBAR_ITEM_COLLAPSED,
   CHANNEL_LIST_ITEM,
+  GAME_THUMBNAIL,
 }
 
 interface LoadingPlaceholderProps {

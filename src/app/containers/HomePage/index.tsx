@@ -2,24 +2,28 @@ import React from 'react';
 import Page from '../../components/Page';
 import { connect } from 'react-redux';
 import { HomeStore } from '../../../store/home/types';
-import { getStreams } from '../../../store/home/actions';
-import Section from './components/Section';
-import { Stream } from '../../../types/Twitch';
+import { getGames, getStreams } from '../../../store/home/actions';
+import SectionStreams from './components/SectionStream';
+import { Game, Stream } from '../../../types/Twitch';
+import SectionGames from './components/SectionGames';
 
 type HomePageProps = {
   streams: Array<Stream>;
-  fetchingStreams: boolean;
+  games: Array<Game>;
+  fetching: boolean;
   getStreams: () => void;
+  getGames: () => void;
 };
 
 class HomePage extends React.Component<HomePageProps, {}> {
   async componentDidMount() {
-    const { getStreams } = this.props;
+    const { getStreams, getGames } = this.props;
     getStreams();
+    getGames();
   }
 
   render() {
-    const { streams, fetchingStreams } = this.props;
+    const { streams, games, fetching } = this.props;
 
     return (
       <Page
@@ -30,11 +34,12 @@ class HomePage extends React.Component<HomePageProps, {}> {
           { name: 'description', content: 'Some description' },
         ]}
       >
-        <Section
+        <SectionStreams
           label="Live channels we think you’ll like"
           streams={streams}
-          loading={fetchingStreams}
+          loading={fetching}
         />
+        <SectionGames label="Categories" games={games} loading={fetching} />
       </Page>
     );
   }
@@ -42,10 +47,12 @@ class HomePage extends React.Component<HomePageProps, {}> {
 
 const mapState = ({ home }: { home: HomeStore }) => ({
   streams: home.streams,
-  fetchingStreams: home.isLoading,
+  games: home.games,
+  fetching: home.isLoading,
 });
 
 const mapDispatch = {
   getStreams,
+  getGames,
 };
 export default connect(mapState, mapDispatch)(HomePage);
