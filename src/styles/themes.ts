@@ -5,11 +5,13 @@ export const fontSizes = {
   regular: '12px',
   regular2: '14px',
   big: '18px',
+  huge: '36px',
 };
 
 export const fontWeights = {
   regular: 400,
   bold: 600,
+  superBold: 700,
 };
 
 export const palette = {

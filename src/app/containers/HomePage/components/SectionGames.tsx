@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fontWeights } from '../../../../styles/themes';
-import { DummyStream, Game, Stream } from '../../../../types/Twitch';
+import { Game } from '../../../../types/Twitch';
 import { Fade } from '@material-ui/core';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { MOBILE_BREAKPOINT } from '../../../../styles/media';
@@ -38,8 +38,10 @@ class SectionGames extends React.Component<
     this.setState({ fade: true });
   }
 
-  onStreamClick = (stream: Stream | DummyStream): void => {
-    this.props.history.push(encodeURI(`${stream.user_name}`));
+  onGameClickHandle = (game: Game): void => {
+    this.props.history.push(
+      encodeURI(`/browse/game/${game.name}?cat_id=${game.id}`),
+    );
   };
 
   render() {
@@ -71,7 +73,7 @@ class SectionGames extends React.Component<
                     loading={loading}
                     key={`game-${game.id}`}
                     game={game}
-                    onClick={console.log}
+                    onGameClick={() => this.onGameClickHandle(game)}
                   />
                 )
               );

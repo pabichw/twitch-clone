@@ -5,6 +5,7 @@ import home from './home/reducer';
 import layout from './layout/reducer';
 import sideNav from './sidenav/reducer';
 import streamPage from './streamPage/reducer';
+import categoryPage from './categoryPage/reducer';
 import searchPage from './searchPage/reducer';
 
 export function createReducer() {
@@ -12,6 +13,7 @@ export function createReducer() {
     auth,
     home,
     streamPage,
+    categoryPage,
     searchPage,
     layout,
     sideNav,

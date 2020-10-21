@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { fontWeights } from '../../../../styles/themes';
 import { DummyStream, Stream } from '../../../../types/Twitch';
 import isEmpty from 'lodash/isEmpty';
-import StreamThumbnail from './StreamThumbnail';
+import StreamThumbnail from '../../../components/StreamThumbnail/StreamThumbnail';
 import Button from '../../../components/Button';
 import { BUTTON } from '../../../../types/UITypes';
 import { ArrowDownSvg } from '../../../__assets/ArrorDownSVG';

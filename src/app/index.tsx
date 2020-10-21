@@ -16,6 +16,7 @@ import { MainLoader } from './components/MainLoader';
 import StreamPage from './containers/StreamPage';
 import { MOBILE_BREAKPOINT } from '../styles/media';
 import SearchPage from './containers/SearchPage';
+import CategoryPage from './containers/CategoryPage';
 
 interface AppProps {
   getAppToken: () => void;
@@ -87,6 +88,11 @@ class App extends React.Component<AppProps, AppState> {
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/search" component={SearchPage} />
                     <Route exact path="/:id" component={StreamPage} />
+                    <Route
+                      exact
+                      path="/browse/game/:catName"
+                      component={CategoryPage}
+                    />
                   </Switch>
                 )}
               </Article>

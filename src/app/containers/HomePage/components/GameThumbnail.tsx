@@ -13,13 +13,13 @@ import { Clickable } from '../../../components/Clickable/Clickable';
 type GameThumbnailProps = {
   game: Game;
   loading: boolean;
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onGameClick: () => void;
 };
 
 const GameThumbnail: FunctionComponent<GameThumbnailProps> = ({
   game,
   loading,
-  onClick,
+  onGameClick,
 }) => {
   const [fade, setFade] = useState<boolean>(false);
   // const [tags, setTags] = useState<Array<StreamTag> | []>([]); // Should be GameTag probably
@@ -44,7 +44,7 @@ const GameThumbnail: FunctionComponent<GameThumbnailProps> = ({
 
   return (
     <Fade in={fade}>
-      <Container onClick={onClick}>
+      <Container onClick={() => onGameClick()}>
         <Top>
           {loading ? (
             <LoadingPlaceholder type={Placeholder.VIDEO_FRAME} />

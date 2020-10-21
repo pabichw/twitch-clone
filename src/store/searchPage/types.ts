@@ -1,4 +1,4 @@
-import { APIError, GetSearchResultsResponse } from '../../types/Api';
+import { APIError, GetCategoryStreamsResponse } from '../../types/Api';
 import { ChannelSearchResult } from '../../types/Twitch';
 
 export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
@@ -17,7 +17,7 @@ interface GetSearchResultsAction {
 
 interface GetSearchResultsCompleteAction {
   type: typeof GET_SEARCH_RESULTS_COMPLETE;
-  payload: GetSearchResultsResponse;
+  payload: GetCategoryStreamsResponse;
 }
 
 interface GetSearchResultsErrorAction {

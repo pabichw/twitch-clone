@@ -15,7 +15,6 @@ const Chip: FunctionComponent<ChipProps> = ({ onClick, text }) => {
 
 const Container = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
   background: var(--chip-bckg);
   color: var(--chip-color);
@@ -27,6 +26,10 @@ const Container = styled.button`
   border-radius: 8px;
   font-weight: ${fontWeights.bold};
   font-size: ${fontSizes.small};
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
   :hover {
     background: var(--chip-bckg-hover);

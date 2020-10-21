@@ -1,30 +1,32 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { DummyStream, Game, Stream, StreamTag } from '../../../../types/Twitch';
+import { DummyStream, Game, Stream, StreamTag } from '../../../types/Twitch';
 import styled from 'styled-components';
-import { getImageOfSize } from '../../../../utils/other';
-import { fontSizes, fontWeights } from '../../../../styles/themes';
-import Chip from '../../../components/Chip';
+import { getImageOfSize } from '../../../utils/other';
+import { fontSizes, fontWeights } from '../../../styles/themes';
+import Chip from '../Chip';
 import {
   LoadingPlaceholder,
   Placeholder,
-} from '../../../components/Placeholders/LoadingPlaceholder';
+} from '../Placeholders/LoadingPlaceholder';
 import { Fade } from '@material-ui/core';
-import { Clickable } from '../../../components/Clickable/Clickable';
-import { MOBILE_BREAKPOINT } from '../../../../styles/media';
+import { Clickable } from '../Clickable/Clickable';
+import { MOBILE_BREAKPOINT } from '../../../styles/media';
 import { useDispatch } from 'react-redux';
-import { getGame, getStreamTags } from '../../../../store/sidenav/actions';
+import { getGame, getStreamTags } from '../../../store/sidenav/actions';
 import isEmpty from 'lodash/isEmpty';
 
 type StreamThumbnailProps = {
   stream: Stream | DummyStream;
   loading: boolean;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  constraintWidth?: boolean;
 };
 
 const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   stream,
   loading,
   onClick,
+  constraintWidth,
 }) => {
   const [fade, setFade] = useState<boolean>(false);
   const [game, setGame] = useState<Game | null>(null);
@@ -60,7 +62,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
 
   return (
     <Fade in={fade}>
-      <Container onClick={onClick}>
+      <Container constraintWidth={!!constraintWidth} onClick={onClick}>
         <Top>
           {loading ? (
             <LoadingPlaceholder type={Placeholder.VIDEO_FRAME} />
@@ -105,12 +107,17 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   );
 };
 
+type ContainerProps = {
+  constraintWidth: boolean;
+};
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 0 5px;
   min-width: 300px;
+  ${(props: ContainerProps) => props.constraintWidth && 'max-width: 300px;'};
 
   cursor: pointer;
 
@@ -123,7 +130,8 @@ const Container = styled.div`
   }
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    min-width: 150px;
+    ${(props: ContainerProps) =>
+      props.constraintWidth ? 'max-width: auto;' : 'min-width: 150px;'};
   }
 `;
 
