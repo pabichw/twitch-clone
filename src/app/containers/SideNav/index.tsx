@@ -4,51 +4,32 @@ import { fontSizes, fontWeights } from '../../../styles/themes';
 import { BUTTON } from '../../../types/UITypes';
 import Button from '../../components/Button';
 import CollapseSVG from '../../__assets/CollapseSVG';
-import { sizes } from '../../../styles/media';
 import { ChannelsList } from './components/ChannelsList';
 import { connect } from 'react-redux';
 import { RootState } from '../../../types';
-import { getStreams } from '../../../store/home/actions';
-import { Channel, Stream } from '../../../types/Twitch';
+import { Channel } from '../../../types/Twitch';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { channelRoutingName } from '../../../utils/other';
+import { getRecommendedChannels } from '../../../store/sidenav/actions';
+import isEmpty from 'lodash/isEmpty';
 
-interface SideNavState {
-  isMobile: boolean;
-}
+interface SideNavState {}
 
 interface SideNavProps {
   isOpened: boolean;
+  isMobile: boolean;
   onToggle: () => void;
-  getStreams: () => void;
-  streams: Array<Stream>;
+  getRecommendedChannels: ({ onSuccess: any }) => void;
+  channels: Array<Channel>;
 }
 
 class SideNav extends Component<
   RouteComponentProps<{}> & SideNavProps,
   SideNavState
 > {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isMobile: window.innerWidth < sizes.medium,
-    };
-  }
-
   componentDidMount() {
-    const { getStreams } = this.props;
-    getStreams();
-
-    const { isMobile } = this.state;
-    window.addEventListener('resize', () => {
-      if (!isMobile && window.innerWidth < sizes.medium) {
-        this.setState({ isMobile: true });
-      }
-      if (window.innerWidth >= sizes.medium) {
-        this.setState({ isMobile: false });
-      }
-    });
+    const { getRecommendedChannels } = this.props;
+    getRecommendedChannels({ onSuccess: () => {} });
   }
 
   handleCollapse = () => {
@@ -62,10 +43,10 @@ class SideNav extends Component<
   };
 
   render() {
-    const { isMobile } = this.state;
-    const { isOpened, streams } = this.props;
+    const { isOpened, isMobile, channels } = this.props;
 
-    const channels = streams && streams.slice(0, 10); //because there is no channels-specific endpoint available
+    console.log('channels', channels);
+    const slicedChannels = isEmpty(channels) ? [] : channels.slice(0, 10); //because there is no channels-specific endpoint available
 
     return (
       <Aside isOpened={isOpened && !isMobile}>
@@ -85,7 +66,7 @@ class SideNav extends Component<
           )}
           {isOpened && !isMobile && <Header>Recommended channels</Header>}
           <ChannelsList
-            channels={channels}
+            channels={slicedChannels}
             collapsed={!isOpened || isMobile}
             isMobile={isMobile}
             onChannelClick={this.handleChannelClick}
@@ -143,11 +124,11 @@ const Header = styled.header`
 `;
 
 const mapState = (state: RootState) => ({
-  streams: state.home.streams,
+  channels: state.sideNav.channels,
 });
 
 const mapDispatch = {
-  getStreams,
+  getRecommendedChannels,
 };
 
 export default withRouter(connect(mapState, mapDispatch)(SideNav));

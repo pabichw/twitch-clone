@@ -1,4 +1,4 @@
-import { Broadcaster, Game, Stream, User } from './Twitch';
+import { Broadcaster, Channel, Game, Stream, User } from './Twitch';
 
 export type APIError = string;
 
@@ -21,10 +21,13 @@ export type GetBroadcasterResponse = ApiResponse & {
   data: Array<Broadcaster>;
 };
 
-export type GetUserResponse = ApiResponse & {
+export type GetChannelResponse = ApiResponse & {
   data: Array<User>;
 };
 
+export type GetSideStreamsResponse = ApiResponse & {
+  data: Array<Channel>;
+};
 // export type GetCategoryStreamsResponse = ApiResponse & {
 //   data: Array<ChannelSearchResult>;
 // };

@@ -75,12 +75,13 @@ class App extends React.Component<AppProps, AppState> {
             <>
               <SideNav
                 isOpened={!isSideNavCollapsed}
+                isMobile={isMobile}
                 onToggle={this.handleOnToggle}
               />
               <Article
                 id="article"
                 maxWidth={`calc(100% - ${
-                  isSideNavCollapsed ? '50px' : '240px'
+                  isSideNavCollapsed || isMobile ? '50px' : '240px'
                 })`}
               >
                 {appToken && (

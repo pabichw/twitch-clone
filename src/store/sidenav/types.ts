@@ -1,5 +1,5 @@
-import { APIError, GetUserResponse } from '../../types/Api';
-import { StreamTag } from '../../types/Twitch';
+import { APIError, GetChannelResponse } from '../../types/Api';
+import { Channel, StreamTag } from '../../types/Twitch';
 
 export const GET_USER = 'GET_USER';
 export const GET_USER_ERROR = 'GET_USER_ERROR';
@@ -10,8 +10,13 @@ export const GET_GAME_COMPLETE = 'GET_GAME_COMPLETE';
 export const GET_STREAM_TAGS = 'GET_STREAM_TAGS';
 export const GET_STREAM_TAGS_ERROR = 'GET_STREAM_TAGS_ERROR';
 export const GET_STREAM_TAGS_COMPLETE = 'GET_STREAM_TAGS_COMPLETE';
+export const GET_REC_CHANNEL = 'GET_SIDE_STREAM';
+export const GET_REC_CHANNEL_ERROR = 'GET_SIDE_STREAM_ERROR';
+export const GET_REC_CHANNEL_COMPLETE = 'GET_SIDE_STREAM_COMPLETE';
 
-export type SideNavStore = {};
+export type SideNavStore = {
+  channels: Array<Channel>;
+};
 
 interface GetUserAction {
   type: typeof GET_USER;
@@ -20,7 +25,7 @@ interface GetUserAction {
 
 interface GetUserCompleteAction {
   type: typeof GET_USER_COMPLETE;
-  payload: GetUserResponse;
+  payload: GetChannelResponse;
 }
 
 interface GetUserErrorAction {
@@ -35,7 +40,7 @@ interface GetGameAction {
 
 interface GetGameCompleteAction {
   type: typeof GET_GAME_COMPLETE;
-  payload: GetUserResponse;
+  payload: GetChannelResponse;
 }
 
 interface GetGameErrorAction {
@@ -50,11 +55,26 @@ interface GetStreamTagsAction {
 
 interface GetStreamTagsCompleteAction {
   type: typeof GET_STREAM_TAGS_COMPLETE;
-  payload: GetUserResponse;
+  payload: GetChannelResponse;
 }
 
 interface GetStreamTagsErrorAction {
   type: typeof GET_STREAM_TAGS_ERROR;
+  payload: APIError;
+}
+
+interface GetRecommendedChannelsAction {
+  type: typeof GET_REC_CHANNEL;
+  payload: { onSuccess?: (tags: Array<Channel>) => void };
+}
+
+interface GetRecommendedChannelsCompleteAction {
+  type: typeof GET_REC_CHANNEL_COMPLETE;
+  payload: GetChannelResponse;
+}
+
+interface GetRecommendedChannelsErrorAction {
+  type: typeof GET_REC_CHANNEL_ERROR;
   payload: APIError;
 }
 
@@ -67,4 +87,7 @@ export type SideNavActionTypes =
   | GetGameErrorAction
   | GetStreamTagsAction
   | GetStreamTagsCompleteAction
-  | GetStreamTagsErrorAction;
+  | GetStreamTagsErrorAction
+  | GetRecommendedChannelsAction
+  | GetRecommendedChannelsCompleteAction
+  | GetRecommendedChannelsErrorAction;

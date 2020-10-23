@@ -37,7 +37,6 @@ class SectionGames extends React.Component<
 
   componentDidMount() {
     const pageElem = document.getElementById('page-home');
-    debugger;
     if (pageElem) {
       new ResizeObserver(() => {
         this.setState({ isMobile: pageElem.offsetWidth <= MOBILE_BREAKPOINT });

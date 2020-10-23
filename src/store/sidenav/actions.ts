@@ -2,6 +2,9 @@ import {
   GET_GAME,
   GET_GAME_COMPLETE,
   GET_GAME_ERROR,
+  GET_REC_CHANNEL,
+  GET_REC_CHANNEL_COMPLETE,
+  GET_REC_CHANNEL_ERROR,
   GET_STREAM_TAGS,
   GET_STREAM_TAGS_COMPLETE,
   GET_STREAM_TAGS_ERROR,
@@ -54,5 +57,22 @@ export const getStreamTagsComplete = (tags): SideNavActionTypes => ({
 
 export const getStreamTagsError = (error: APIError): SideNavActionTypes => ({
   type: GET_STREAM_TAGS_ERROR,
+  payload: error,
+});
+
+export const getRecommendedChannels = ({ onSuccess }): SideNavActionTypes => ({
+  type: GET_REC_CHANNEL,
+  payload: { onSuccess },
+});
+
+export const getRecommendedChannelsComplete = (tags): SideNavActionTypes => ({
+  type: GET_REC_CHANNEL_COMPLETE,
+  payload: tags,
+});
+
+export const getRecommendedChannelsError = (
+  error: APIError,
+): SideNavActionTypes => ({
+  type: GET_REC_CHANNEL_ERROR,
   payload: error,
 });

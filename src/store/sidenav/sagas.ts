@@ -2,6 +2,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   getGameComplete,
   getGameError,
+  getRecommendedChannelsComplete,
+  getRecommendedChannelsError,
   getStreamTagsComplete,
   getStreamTagsError,
   getUserComplete,
@@ -9,7 +11,7 @@ import {
 } from './actions';
 import api from '../../utils/api';
 import { apiConfig } from '../../config/apiConfig';
-import { GET_GAME, GET_STREAM_TAGS, GET_USER } from './types';
+import { GET_GAME, GET_REC_CHANNEL, GET_STREAM_TAGS, GET_USER } from './types';
 
 const { ROOT_URL } = apiConfig;
 
@@ -56,8 +58,24 @@ export function* getStreamTagsFlow({
   }
 }
 
+export function* getRecommendedChannelsFlow({
+  payload: { onSuccess },
+}: ReturnType<any>) {
+  try {
+    const {
+      data: { data },
+    } = yield call(() => api.get(`${ROOT_URL}/streams`)); // because no recommended channels specific endpoint
+    const channels = data;
+    yield put(getRecommendedChannelsComplete(channels));
+    yield call(onSuccess(channels));
+  } catch (err) {
+    yield put(getRecommendedChannelsError(err));
+  }
+}
+
 export function* sideNavSaga() {
   yield takeEvery(GET_USER, getUserFlow);
   yield takeEvery(GET_GAME, getGameFlow);
   yield takeEvery(GET_STREAM_TAGS, getStreamTagsFlow);
+  yield takeEvery(GET_REC_CHANNEL, getRecommendedChannelsFlow);
 }

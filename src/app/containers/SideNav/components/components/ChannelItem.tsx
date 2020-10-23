@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Channel, User } from '../../../../../types/Twitch';
+import { Channel, Game, User } from '../../../../../types/Twitch';
 
 import { useDispatch } from 'react-redux';
-import { getUser } from '../../../../../store/sidenav/actions';
+import { getGame, getUser } from '../../../../../store/sidenav/actions';
 import { fontSizes, fontWeights } from '../../../../../styles/themes';
 import { getImageOfSize } from '../../../../../utils/other';
 import {
@@ -24,6 +24,7 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [game, setGame] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -34,7 +35,15 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
         userId: content.user_id,
         onSuccess: user => {
           setUser(user);
-          setIsLoading(false);
+          dispatch(
+            getGame({
+              id: content.game_id,
+              onSuccess: game => {
+                setGame(game);
+                setIsLoading(false);
+              },
+            }),
+          );
         },
       }),
     );
@@ -49,7 +58,7 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
           <LoadingPlaceholder type={Placeholder.SIDEBAR_ITEM} />
         )
       ) : user ? (
-        <Content user={user} collapsed={minimized} />
+        <Content user={user} game={game} collapsed={minimized} />
       ) : (
         ''
       )}
@@ -70,21 +79,23 @@ const Container = styled.li`
 
 interface ContentProps {
   user: User | null;
+  game: Game | null;
   collapsed?: boolean;
 }
 
-const Content: React.FC<ContentProps> = ({ user, collapsed }) => {
+const Content: React.FC<ContentProps> = ({ user, game, collapsed }) => {
   const actualUser: any = user; // hack - because typings are fucked;
+  const actualGame: any = game; // hack - because typings are fucked;
   return (
     <Row>
       <AvatarWrapper>
         <Avatar src={getImageOfSize(actualUser.profile_image_url, 70, 70)} />
       </AvatarWrapper>
       {!collapsed && (
-        <Box ml="10px">
+        <TextContent ml="10px">
           <ChannelName>{actualUser.display_name}</ChannelName>
-          <ChannelDesc>{actualUser.display_name}</ChannelDesc>
-        </Box>
+          <ChannelDesc>{actualGame.name}</ChannelDesc>
+        </TextContent>
       )}
     </Row>
   );
@@ -100,7 +111,7 @@ interface BoxProps {
   ml: string;
 }
 
-const Box = styled.div`
+const TextContent = styled.div`
   display: block;
   margin-left: ${(props: BoxProps) => props.ml};
 `;
@@ -121,12 +132,20 @@ const Avatar = styled.img`
 const ChannelName = styled.p`
   font-weight: ${fontWeights.bold};
   font-size: ${fontSizes.regular2};
+  text-overflow: ellipsis;
+  max-width: 178px;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const ChannelDesc = styled.p`
   color: var(--font-secondary);
   font-size: ${fontSizes.regular};
   line-height: 1.2em;
+  text-overflow: ellipsis;
+  max-width: 178px;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export default ChannelItem;
