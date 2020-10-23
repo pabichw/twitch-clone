@@ -68,7 +68,6 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
 
   const gameLoaded = !!game;
   const streamTagsLoaded = !isEmpty(streamTags);
-  console.log('streamTags', streamTags);
 
   return (
     <Fade in={fade}>

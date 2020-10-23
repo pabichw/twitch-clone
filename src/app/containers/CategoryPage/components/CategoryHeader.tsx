@@ -14,7 +14,6 @@ interface Props {
 }
 
 const CategoryHeader: React.FC<Props> = ({ category, isLoading }) => {
-  console.log('category', category);
   return (
     <Container>
       {isLoading || !category ? (

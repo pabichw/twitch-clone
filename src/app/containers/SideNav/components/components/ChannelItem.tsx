@@ -40,8 +40,6 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
     );
   }, [content, dispatch]);
 
-  console.log('user', user);
-
   return (
     <Container onClick={onClick}>
       {isLoading ? (

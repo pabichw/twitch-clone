@@ -39,7 +39,6 @@ class CategoryPage extends React.Component<
     } = this.props;
 
     const { catName } = params;
-    console.log('fetch for game', catName);
     getGame({
       catName,
       onSuccess: game => {

@@ -48,9 +48,7 @@ class SectionGames extends React.Component<
   }
 
   onGameClickHandle = (game: Game): void => {
-    this.props.history.push(
-      encodeURI(`/browse/game/${game.name}?cat_id=${game.id}`),
-    );
+    this.props.history.push(encodeURI(`/browse/game/${game.name}`));
   };
 
   render() {
@@ -63,7 +61,6 @@ class SectionGames extends React.Component<
     const sectionId = `stream-row-${label}`;
     const articleElem = document.getElementById('article');
 
-    console.log('games', games);
     return (
       <Fade in={fade}>
         <SectionContainer>
