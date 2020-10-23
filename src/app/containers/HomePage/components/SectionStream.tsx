@@ -11,6 +11,7 @@ import { Fade } from '@material-ui/core';
 import { MOCKS } from '../../../__tests__/mocks';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { MOBILE_BREAKPOINT } from '../../../../styles/media';
+import ResizeObserver from 'resize-observer-polyfill';
 
 interface SectionProps {
   label?: string;
@@ -21,7 +22,7 @@ interface SectionProps {
 interface SectionState {
   fade: boolean;
   expanded: boolean;
-  lastRender: Date;
+  isMobile: boolean | undefined;
 }
 
 class SectionStreams extends React.Component<
@@ -30,17 +31,24 @@ class SectionStreams extends React.Component<
 > {
   constructor(props) {
     super(props);
+    const pageElem = document.getElementById('page-home');
     this.state = {
       fade: false, // for initial fade in animation
       expanded: false,
-      lastRender: new Date(), // just to force rerendering on resize
+      isMobile: pageElem
+        ? pageElem.offsetWidth <= MOBILE_BREAKPOINT
+        : undefined,
     };
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.setState({ lastRender: new Date() });
-    });
+    const pageElem = document.getElementById('page-home');
+    debugger;
+    if (pageElem) {
+      new ResizeObserver(() => {
+        this.setState({ isMobile: pageElem.offsetWidth <= MOBILE_BREAKPOINT });
+      }).observe(pageElem);
+    }
 
     this.setState({ fade: true });
   }
@@ -50,10 +58,9 @@ class SectionStreams extends React.Component<
   };
 
   render() {
-    const { fade, expanded } = this.state;
+    const { fade, expanded, isMobile } = this.state;
     const { label, streams, loading } = this.props;
 
-    const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
     const minPxWidthForStream = isMobile ? 100 : 300;
     const magicNumber = isMobile ? 150 : 100;
     const sectionId = `stream-row-${label}`;
@@ -78,6 +85,7 @@ class SectionStreams extends React.Component<
                     <StreamThumbnail
                       key={`stream-${idx}`}
                       stream={stream}
+                      isDummy={isEmpty(streams)}
                       loading={loading}
                       onClick={() =>
                         !isEmpty(streams) && this.onStreamClick(stream)
@@ -105,6 +113,7 @@ class SectionStreams extends React.Component<
                         key={`stream-${idx}`}
                         stream={stream}
                         loading={loading}
+                        isDummy={isEmpty(streams)}
                         onClick={() => this.onStreamClick(stream)}
                       />
                     )

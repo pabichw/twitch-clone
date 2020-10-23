@@ -6,6 +6,7 @@ import { Fade } from '@material-ui/core';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { MOBILE_BREAKPOINT } from '../../../../styles/media';
 import GameThumbnail from './GameThumbnail';
+import ResizeObserver from 'resize-observer-polyfill';
 
 interface SectionProps {
   label?: string;
@@ -15,7 +16,7 @@ interface SectionProps {
 
 interface SectionState {
   fade: boolean;
-  lastRender: Date;
+  isMobile: boolean | undefined;
 }
 
 class SectionGames extends React.Component<
@@ -24,16 +25,24 @@ class SectionGames extends React.Component<
 > {
   constructor(props) {
     super(props);
+    const pageElem = document.getElementById('page-home');
+
     this.state = {
       fade: false, // for initial fade in animation
-      lastRender: new Date(), // just to force rerendering on resize
+      isMobile: pageElem
+        ? pageElem.offsetWidth <= MOBILE_BREAKPOINT
+        : undefined,
     };
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.setState({ lastRender: new Date() });
-    });
+    const pageElem = document.getElementById('page-home');
+    debugger;
+    if (pageElem) {
+      new ResizeObserver(() => {
+        this.setState({ isMobile: pageElem.offsetWidth <= MOBILE_BREAKPOINT });
+      }).observe(pageElem);
+    }
 
     this.setState({ fade: true });
   }

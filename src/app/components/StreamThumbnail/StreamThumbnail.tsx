@@ -20,6 +20,7 @@ type StreamThumbnailProps = {
   loading: boolean;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   constraintWidth?: boolean;
+  isDummy?: boolean;
 };
 
 const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
@@ -27,6 +28,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   loading,
   onClick,
   constraintWidth,
+  isDummy,
 }) => {
   const [fade, setFade] = useState<boolean>(false);
   const [game, setGame] = useState<Game | null>(null);
@@ -35,7 +37,11 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => setFade(true), []);
+
   useEffect(() => {
+    if (isDummy) {
+      return;
+    }
     dispatch(
       getGame({
         id: stream.game_id,
@@ -44,8 +50,12 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
         },
       }),
     );
-  }, [dispatch, stream.game_id]);
+  }, [dispatch, isDummy, stream.game_id]);
+
   useEffect(() => {
+    if (isDummy) {
+      return;
+    }
     dispatch(
       getStreamTags({
         id: stream.user_id,
@@ -54,7 +64,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
         },
       }),
     );
-  }, [dispatch, stream.game_id, stream.id, stream.user_id]);
+  }, [dispatch, isDummy, stream.game_id, stream.id, stream.user_id]);
 
   const gameLoaded = !!game;
   const streamTagsLoaded = !isEmpty(streamTags);
