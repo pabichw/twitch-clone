@@ -59,6 +59,7 @@ type Theme = {
   ['main-loader-spinner']: Color;
   ['live-bckg']: Color;
   ['live-text']: Color;
+  ['card-bckg']: Color;
 };
 
 type Themes = {
@@ -90,5 +91,6 @@ export const themes: Themes = {
     'main-loader-spinner': palette.gray1,
     'live-bckg': palette.dangerRed,
     'live-text': palette.fadeRed,
+    'card-bckg': palette.dark2,
   },
 };

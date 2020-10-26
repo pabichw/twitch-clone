@@ -17,6 +17,7 @@ import StreamPage from './containers/StreamPage';
 import { MOBILE_BREAKPOINT } from '../styles/media';
 import SearchPage from './containers/SearchPage';
 import CategoryPage from './containers/CategoryPage';
+import Popup from './components/Popup';
 
 interface AppProps {
   getAppToken: () => void;
@@ -25,6 +26,7 @@ interface AppProps {
   fetchingAppToken: boolean;
   isSideNavCollapsed: boolean;
   toggleSideNav: any;
+  isPopupVisible: boolean;
 }
 
 interface AppState {
@@ -61,45 +63,53 @@ class App extends React.Component<AppProps, AppState> {
 
   render() {
     const { isMobile } = this.state;
-    const { appToken, fetchingAppToken, isSideNavCollapsed } = this.props;
+    const {
+      appToken,
+      fetchingAppToken,
+      isSideNavCollapsed,
+      isPopupVisible,
+    } = this.props;
 
     const showMainLoader = fetchingAppToken;
-    console.log('isSideNavCollapsed', isSideNavCollapsed, 'isMobile', isMobile);
+
     return (
       <BrowserRouter>
-        <TopNav />
-        <Main>
-          {showMainLoader ? (
-            <MainLoader />
-          ) : (
-            <>
-              <SideNav
-                isOpened={!isSideNavCollapsed}
-                isMobile={isMobile}
-                onToggle={this.handleOnToggle}
-              />
-              <Article
-                id="article"
-                maxWidth={`calc(100% - ${
-                  isSideNavCollapsed || isMobile ? '50px' : '240px'
-                })`}
-              >
-                {appToken && (
-                  <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route exact path="/search" component={SearchPage} />
-                    <Route exact path="/:id" component={StreamPage} />
-                    <Route
-                      exact
-                      path="/browse/game/:catName"
-                      component={CategoryPage}
-                    />
-                  </Switch>
-                )}
-              </Article>
-            </>
-          )}
-        </Main>
+        <AppWrap>
+          {isPopupVisible && <Popup />}
+          <TopNav />
+          <Main>
+            {showMainLoader ? (
+              <MainLoader />
+            ) : (
+              <>
+                <SideNav
+                  isOpened={!isSideNavCollapsed}
+                  isMobile={isMobile}
+                  onToggle={this.handleOnToggle}
+                />
+                <Article
+                  id="article"
+                  maxWidth={`calc(100% - ${
+                    isSideNavCollapsed || isMobile ? '50px' : '240px'
+                  })`}
+                >
+                  {appToken && (
+                    <Switch>
+                      <Route exact path="/" component={HomePage} />
+                      <Route exact path="/search" component={SearchPage} />
+                      <Route exact path="/:id" component={StreamPage} />
+                      <Route
+                        exact
+                        path="/browse/game/:catName"
+                        component={CategoryPage}
+                      />
+                    </Switch>
+                  )}
+                </Article>
+              </>
+            )}
+          </Main>
+        </AppWrap>
         <GlobalStyle />
       </BrowserRouter>
     );
@@ -124,11 +134,16 @@ const Article = styled.article`
   max-width: ${(props: ArticleProps) => props.maxWidth};
 `;
 
+const AppWrap = styled.div`
+  position: relative;
+`;
+
 const mapState = (state: RootState) => ({
   isAppAuthenticated: state.auth.isAppAuthenticated,
   appToken: state.auth.appToken,
   fetchingAppToken: state.auth.isLoading,
   isSideNavCollapsed: state.layout.isSideNavCollapsed,
+  isPopupVisible: state.layout.popup.isVisible,
 });
 
 const mapDispatch = {
