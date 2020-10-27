@@ -12,6 +12,8 @@ import BroadcasterInfo from './components/BroadcasterInfo';
 import StylingUtils from '../../../utils/stylingUtils';
 import get from 'lodash/get';
 import { LS_KEYS } from '../../../config/localStorageKeys';
+import { RootState } from '../../../types';
+import NotFoundStream from '../../components/NotFoundStream';
 
 interface RouterProps {
   id: string | undefined;
@@ -21,6 +23,7 @@ interface StreamPageProps {
   getBroadcaster: ({ login: string }) => void;
   stream: Stream;
   broadcaster: Broadcaster;
+  isLoading: boolean;
 }
 
 interface StreamPageState {
@@ -75,7 +78,7 @@ class StreamPage extends React.Component<
   };
 
   render() {
-    const { match, stream, broadcaster } = this.props;
+    const { match, stream, broadcaster, isLoading } = this.props;
     const { isMobile, isChatCollapsed } = this.state;
     // @ts-ignore
     const { id } = match.params;
@@ -94,25 +97,34 @@ class StreamPage extends React.Component<
         ]}
       >
         <Content>
-          <Main>
-            <TwitchVideoEmbed
-              url={urlVideo}
-              isChatCollapsed={isChatCollapsed}
-              onToggleChat={() => this.onChatToggle(true)}
-            />
-            {broadcaster && stream && (
-              <StreamInfoWrapper>
-                <BroadcasterInfo broadcaster={broadcaster} stream={stream} />
-              </StreamInfoWrapper>
-            )}
-          </Main>
-          {!isMobile && !isChatCollapsed && (
-            <RightCol>
-              <TwitchChatEmbed
-                url={urlChat}
-                onToggle={() => this.onChatToggle(false)}
-              />
-            </RightCol>
+          {!isLoading && !stream ? (
+            <NotFoundStream />
+          ) : (
+            <>
+              <Main>
+                <TwitchVideoEmbed
+                  url={urlVideo}
+                  isChatCollapsed={isChatCollapsed}
+                  onToggleChat={() => this.onChatToggle(true)}
+                />
+                {broadcaster && stream && (
+                  <StreamInfoWrapper>
+                    <BroadcasterInfo
+                      broadcaster={broadcaster}
+                      stream={stream}
+                    />
+                  </StreamInfoWrapper>
+                )}
+              </Main>
+              {!isMobile && !isChatCollapsed && (
+                <RightCol>
+                  <TwitchChatEmbed
+                    url={urlChat}
+                    onToggle={() => this.onChatToggle(false)}
+                  />
+                </RightCol>
+              )}
+            </>
           )}
         </Content>
       </Page>
@@ -122,7 +134,7 @@ class StreamPage extends React.Component<
 
 const Content = styled.div`
   display: flex;
-
+  height: 100%;
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     flex-direction: column;
   }
@@ -145,7 +157,8 @@ const StreamInfoWrapper = styled.div`
   margin: 20px;
 `;
 
-const mapState = state => ({
+const mapState = (state: RootState) => ({
+  isLoading: state.streamPage.isLoading,
   stream: state.streamPage.stream,
   broadcaster: state.streamPage.broadcaster,
 });

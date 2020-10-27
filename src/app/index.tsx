@@ -136,6 +136,8 @@ const Article = styled.article`
 
 const AppWrap = styled.div`
   position: relative;
+  height: 100vh;
+  width: 100vw;
 `;
 
 const mapState = (state: RootState) => ({

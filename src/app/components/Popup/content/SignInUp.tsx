@@ -1,10 +1,11 @@
 import React from 'react';
 import Card from '../../Card';
+import NoFeature from '../../NoFeature';
 
 const SignInUp = () => {
   return (
     <Card width="420px" height="450px">
-      Sorry this is not available
+      <NoFeature />
     </Card>
   );
 };

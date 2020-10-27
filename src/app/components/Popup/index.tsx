@@ -19,9 +19,10 @@ class Popup extends Component<PopupProps, PopupState> {
   render() {
     const { content, togglePopup } = this.props;
     return (
-      <PopupWrap
-        onClick={() => togglePopup({ isVisible: false, content: null })}
-      >
+      <Container>
+        <DarkLayer
+          onClick={() => togglePopup({ isVisible: false, content: null })}
+        />
         <ContentWrap>
           {content}
           <CloseWrap>
@@ -29,22 +30,24 @@ class Popup extends Component<PopupProps, PopupState> {
               type={BUTTON.TRANSPARENT}
               icon={
                 <CrossIconWrap>
-                  <CrossSvg />
+                  <CrossSvg color="var(--font-normal)" />
                 </CrossIconWrap>
               }
               onClick={() => togglePopup({ isVisible: false, content: null })}
             />
           </CloseWrap>
         </ContentWrap>
-      </PopupWrap>
+      </Container>
     );
   }
 }
 
-const PopupWrap = styled.div`
+const Container = styled.div``;
+
+const DarkLayer = styled.div`
   width: 100vw;
   height: 100vh;
-  background: ${palette.darkTransparent};
+  background: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 0;
   left: 0;
@@ -56,14 +59,20 @@ const ContentWrap = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 999;
 `;
 
 const CrossIconWrap = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 `;
 
-const CloseWrap = styled.div``;
+const CloseWrap = styled.div`
+  position: absolute;
+  top: 0;
+  right: -40px;
+`;
+
 const mapState = (state: RootState) => ({
   content: state.layout.popup.content,
 });
