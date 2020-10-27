@@ -10,6 +10,7 @@ import {
   Placeholder,
 } from '../../../../components/Placeholders/LoadingPlaceholder';
 import styled from 'styled-components';
+import Tooltip from '../../../../components/Tooltip';
 
 interface ChannelItemProps {
   content: Channel;
@@ -23,8 +24,8 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
   onClick,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState(null);
-  const [game, setGame] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [game, setGame] = useState<Game | null>(null);
 
   const dispatch = useDispatch();
 
@@ -58,7 +59,9 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
           <LoadingPlaceholder type={Placeholder.SIDEBAR_ITEM} />
         )
       ) : user ? (
-        <Content user={user} game={game} collapsed={minimized} />
+        <Tooltip side="right" content={user.display_name}>
+          <Content user={user} game={game} collapsed={minimized} />
+        </Tooltip>
       ) : (
         ''
       )}

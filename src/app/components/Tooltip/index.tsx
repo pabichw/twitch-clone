@@ -76,7 +76,6 @@ const Tooltip: React.FC<Props> = ({ children, content, mode, side }) => {
     setShown(false);
   };
 
-  // @ts-ignore
   return (
     <Wrap onMouseOver={init} onMouseLeave={end}>
       <ChildWrap ref={childEl}>{children}</ChildWrap>

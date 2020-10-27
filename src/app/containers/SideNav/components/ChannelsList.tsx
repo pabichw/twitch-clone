@@ -29,13 +29,11 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({
         </Tooltip>
       )}
       {(channels || MOCKS.STREAMS).map(ch => (
-        <Tooltip side="right" content="hello world">
-          <ChannelItem
-            content={ch}
-            minimized={collapsed}
-            onClick={() => onChannelClick(ch)}
-          />
-        </Tooltip>
+        <ChannelItem
+          content={ch}
+          minimized={collapsed}
+          onClick={() => onChannelClick(ch)}
+        />
       ))}
     </List>
   );
