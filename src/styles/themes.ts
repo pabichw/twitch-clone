@@ -60,6 +60,12 @@ type Theme = {
   ['live-bckg']: Color;
   ['live-text']: Color;
   ['card-bckg']: Color;
+
+  ['tooltip-dark-bckg']: Color;
+  ['tooltip-dark-text']: Color;
+
+  ['tooltip-light-bckg']: Color;
+  ['tooltip-light-text']: Color;
 };
 
 type Themes = {
@@ -92,5 +98,11 @@ export const themes: Themes = {
     'live-bckg': palette.dangerRed,
     'live-text': palette.fadeRed,
     'card-bckg': palette.dark2,
+
+    'tooltip-dark-bckg': palette.dark1,
+    'tooltip-dark-text': palette.offWhite,
+
+    'tooltip-light-bckg': palette.offWhite,
+    'tooltip-light-text': palette.dark3,
   },
 };

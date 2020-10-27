@@ -4,6 +4,7 @@ import ChannelItem from './components/ChannelItem';
 import { Channel } from '../../../../types/Twitch';
 import CameraSvg from '../../../__assets/CameraSvg';
 import { MOCKS } from '../../../__tests__/mocks';
+import Tooltip from '../../../components/Tooltip';
 
 interface ChannelsListProps {
   channels: Array<Channel>;
@@ -21,16 +22,20 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({
   return (
     <List mt={collapsed && !isMobile ? '50px' : isMobile ? '2px' : '0px'}>
       {collapsed && (
-        <CameraIconWrap>
-          <CameraSvg />
-        </CameraIconWrap>
+        <Tooltip content="Recommended channels" mode="light" side="right">
+          <CameraIconWrap>
+            <CameraSvg />
+          </CameraIconWrap>
+        </Tooltip>
       )}
       {(channels || MOCKS.STREAMS).map(ch => (
-        <ChannelItem
-          content={ch}
-          minimized={collapsed}
-          onClick={() => onChannelClick(ch)}
-        />
+        <Tooltip side="right" content="hello world">
+          <ChannelItem
+            content={ch}
+            minimized={collapsed}
+            onClick={() => onChannelClick(ch)}
+          />
+        </Tooltip>
       ))}
     </List>
   );

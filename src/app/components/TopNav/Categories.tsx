@@ -5,6 +5,7 @@ import { sizes } from '../../../styles/media';
 import MusicSvg from '../../__assets/MusicSvg';
 import HeartSvg from '../../__assets/HeartSvg';
 import TrophySvg from '../../__assets/TrophySvg';
+import Tooltip from '../Tooltip';
 
 const cats = [
   { label: 'Browse', href: '/directory/', icon: <HeartSvg /> },
@@ -21,13 +22,15 @@ class Categories extends Component<CategoriesProps> {
     const { isMobile } = this.props;
     return (
       <List>
-        {cats.map(cat =>
-          isMobile ? (
-            <MobileCategory>{cat.icon}</MobileCategory>
-          ) : (
-            <Category>{cat.label}</Category>
-          ),
-        )}
+        {cats.map(cat => (
+          <Tooltip mode="light" content={cat.label} side="bottom">
+            {isMobile ? (
+              <MobileCategory>{cat.icon}</MobileCategory>
+            ) : (
+              <Category>{cat.label}</Category>
+            )}
+          </Tooltip>
+        ))}
       </List>
     );
   }
