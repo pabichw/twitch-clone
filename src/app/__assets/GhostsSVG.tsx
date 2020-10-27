@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { Color } from '../../types';
 
 interface GhostsSVGSvgProps {}
 

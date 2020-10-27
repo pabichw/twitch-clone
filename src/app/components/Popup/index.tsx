@@ -3,7 +3,6 @@ import { togglePopup } from '../../../store/layout/actions';
 import { connect } from 'react-redux';
 import { RootState } from '../../../types';
 import styled from 'styled-components';
-import { palette } from '../../../styles/themes';
 import Button from '../Button';
 import { BUTTON } from '../../../types/UITypes';
 import { CrossSvg } from '../../__assets/CrossSVG';
