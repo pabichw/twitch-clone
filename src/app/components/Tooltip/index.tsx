@@ -144,9 +144,10 @@ const Tip = styled.div`
   border-radius: 4px;
   ${(props: TipProps) => calcPositions(props)}
   white-space: nowrap;
-
-  background: var(--tooltip- ${(props: TipProps) => props.mode}-bckg);
-  color: var(--tooltip- ${(props: TipProps) => props.mode}-text);
+  /* eslint-disable-next-line */
+  background: ${(props: TipProps) => `var(--tooltip-${props.mode}-bckg)`};
+  /* eslint-disable-next-line */
+  color: ${(props: TipProps) => `var(--tooltip-${props.mode}-text)`};
   font-size: ${fontSizes.regular};
 
   ${fadeIn()}
