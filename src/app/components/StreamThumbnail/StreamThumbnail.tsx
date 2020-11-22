@@ -146,6 +146,7 @@ const Container = styled.div`
 
 const ThumbnailWrapper = styled.div`
   height: 100%;
+  padding-bottom: 56.25%;
   background: var(--placeholder);
   width: 100%;
   position: relative !important;
