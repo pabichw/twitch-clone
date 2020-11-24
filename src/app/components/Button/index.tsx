@@ -25,8 +25,8 @@ const Button: FunctionComponent<ButtonProps> = ({
     <Container
       onClick={onClick}
       padding={type === BUTTON.TRANSPARENT && icon && !text ? '0' : '0 10px'}
-      hover={STYLES[type].hover}
       {...STYLES[type]}
+      hover={STYLES[type].hover}
       {...(color && { style: { color } })}
     >
       {icon}

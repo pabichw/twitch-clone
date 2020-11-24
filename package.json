@@ -19,6 +19,8 @@
     "@types/styled-components": "5.0.1",
     "@types/testing-library__jest-dom": "5.0.2",
     "@types/webpack-env": "1.15.1",
+    "@typescript-eslint/eslint-plugin": "4.8.2",
+    "@typescript-eslint/parser": "4.8.2",
     "axios": "0.20.0",
     "cross-env": "7.0.2",
     "dotenv": "8.2.0",
@@ -58,14 +60,17 @@
     "stylelint-config-recommended": "3.0.0",
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
-    "ts-node": "8.8.2"
+    "ts-node": "8.8.2",
+    "typescript": "^4.1.2"
   },
-  "devDependencies": {
-    "typescript": "3.8.2"
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
+    "**/@typescript-eslint/parser": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "yarn && yarn tsc && react-scripts build && echo '/* /index.html 200' | cat >build/_redirects ",
+    "build": "yarn && yarn tsc && react-scripts build",
+    "clean:build": "rm -rf build && rm -rf node_modules && yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
