@@ -11,6 +11,7 @@ import {
 } from '../../../../components/Placeholders/LoadingPlaceholder';
 import styled from 'styled-components';
 import Tooltip from '../../../../components/Tooltip';
+import TooltipContent from './components/TooltipContent';
 
 interface ChannelItemProps {
   content: Channel;
@@ -59,7 +60,11 @@ const ChannelItem: React.FC<ChannelItemProps> = ({
           <LoadingPlaceholder type={Placeholder.SIDEBAR_ITEM} />
         )
       ) : user ? (
-        <Tooltip side="right" content={user.display_name}>
+        <Tooltip
+          side="right"
+          // content={() => <TooltipContent user={user} game={game} />}
+          content={<TooltipContent game={game} user={user} />}
+        >
           <Content user={user} game={game} collapsed={minimized} />
         </Tooltip>
       ) : (
