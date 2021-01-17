@@ -42,6 +42,8 @@ class App extends React.Component<AppProps, AppState> {
   }
   async componentDidMount() {
     const { getAppToken, toggleSideNav } = this.props;
+
+    await localStorage.removeItem('APP_TOKEN');
     await getAppToken();
 
     window.addEventListener('resize', async () => {
@@ -78,7 +80,7 @@ class App extends React.Component<AppProps, AppState> {
           {isPopupVisible && <Popup />}
           <TopNav />
           <Main>
-            {showMainLoader ? (
+            {showMainLoader && !appToken ? (
               <MainLoader />
             ) : (
               <>
@@ -93,18 +95,16 @@ class App extends React.Component<AppProps, AppState> {
                     isSideNavCollapsed || isMobile ? '50px' : '240px'
                   })`}
                 >
-                  {appToken && (
-                    <Switch>
-                      <Route exact path="/" component={HomePage} />
-                      <Route exact path="/search" component={SearchPage} />
-                      <Route exact path="/:id" component={StreamPage} />
-                      <Route
-                        exact
-                        path="/browse/game/:catName"
-                        component={CategoryPage}
-                      />
-                    </Switch>
-                  )}
+                  <Switch>
+                    <Route exact path="/" component={HomePage} />
+                    <Route exact path="/search" component={SearchPage} />
+                    <Route exact path="/:id" component={StreamPage} />
+                    <Route
+                      exact
+                      path="/browse/game/:catName"
+                      component={CategoryPage}
+                    />
+                  </Switch>
                 </Article>
               </>
             )}

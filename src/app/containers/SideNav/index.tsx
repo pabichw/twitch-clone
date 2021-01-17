@@ -45,7 +45,6 @@ class SideNav extends Component<
   render() {
     const { isOpened, isMobile, channels } = this.props;
 
-    console.log('channels', channels);
     const slicedChannels = isEmpty(channels) ? [] : channels.slice(0, 10); //because there is no channels-specific endpoint available
 
     return (

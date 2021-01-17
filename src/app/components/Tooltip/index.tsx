@@ -59,8 +59,6 @@ const Tooltip: React.FC<Props> = ({ children, content, mode, side }) => {
         right,
         // @ts-ignore
       } = childEl.current.getBoundingClientRect();
-      // @ts-ignore
-      console.log(childEl.current.getBoundingClientRect());
       setDisplayOptions({ ...displayOptions, top, bottom, left, right });
     }
   };
