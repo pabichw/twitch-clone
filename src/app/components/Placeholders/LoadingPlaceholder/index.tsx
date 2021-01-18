@@ -54,7 +54,7 @@ export const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
           <ContentLoader
             speed={2}
             width={145}
-            height={40}
+            height={35}
             viewBox="0 0 145 40"
             backgroundColor="var(--placeholder)"
             foregroundColor="var(--placeholder-bckg)"
