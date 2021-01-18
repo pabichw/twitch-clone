@@ -65,7 +65,7 @@ class SectionGames extends React.Component<
         <SectionContainer>
           {label && <Label>{label}</Label>}
           <Row id={sectionId}>
-            {games.map((game: Game, idx: number) => {
+            {games?.map((game: Game, idx: number) => {
               let isTooNarrow;
               if (articleElem) {
                 isTooNarrow =
