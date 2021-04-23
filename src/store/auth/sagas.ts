@@ -3,6 +3,7 @@ import { getAppTokenComplete, signInComplete, signInError } from './actions';
 import { GET_APP_TOKEN, SIGN_IN } from './types';
 import api from '../../utils/api';
 import { apiConfig } from '../../config/apiConfig';
+import { LS_KEYS } from 'config/localStorageKeys';
 
 const { ROOT_URL } = apiConfig;
 
@@ -22,7 +23,7 @@ export function* getAppTokenFlow() {
     api.defaults.headers.common[
       'authorization'
     ] = `bearer ${data.access_token}`;
-    localStorage.setItem('APP_TOKEN', data.access_token);
+    localStorage.setItem(LS_KEYS.APP_TOKEN, data.access_token);
     yield put(getAppTokenComplete(data));
   } catch (err) {
     yield put(signInError(err));

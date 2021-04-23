@@ -18,6 +18,7 @@ import { MOBILE_BREAKPOINT } from '../styles/media';
 import SearchPage from './containers/SearchPage';
 import CategoryPage from './containers/CategoryPage';
 import Popup from './components/Popup';
+import { LS_KEYS } from 'config/localStorageKeys';
 
 interface AppProps {
   getAppToken: () => void;
@@ -43,7 +44,7 @@ class App extends React.Component<AppProps, AppState> {
   async componentDidMount() {
     const { getAppToken, toggleSideNav } = this.props;
 
-    await localStorage.removeItem('APP_TOKEN');
+    await localStorage.removeItem(LS_KEYS.APP_TOKEN);
     await getAppToken();
 
     window.addEventListener('resize', async () => {
