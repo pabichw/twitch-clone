@@ -1,9 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-
-const getPrettierOptions = () => JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
-);
+const prettierOptions = {
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "avoid"
+};
 
 module.exports = {
   extends: [
@@ -14,12 +17,12 @@ module.exports = {
   ],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': ['error', getPrettierOptions()],
+    'prettier/prettier': ['error', prettierOptions],
   },
   overrides: [
     {
       files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': ['warn', getPrettierOptions()] },
+      rules: { 'prettier/prettier': ['warn', prettierOptions] },
     },
   ],
 };
