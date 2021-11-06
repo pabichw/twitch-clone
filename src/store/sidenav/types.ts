@@ -50,7 +50,10 @@ interface GetGameErrorAction {
 
 interface GetStreamTagsAction {
   type: typeof GET_STREAM_TAGS;
-  payload: { id: string; onSuccess: (tags: Array<StreamTag>) => void };
+  payload: {
+    broadcaster_id: string;
+    onSuccess: (tags: Array<StreamTag>) => void;
+  };
 }
 
 interface GetStreamTagsCompleteAction {

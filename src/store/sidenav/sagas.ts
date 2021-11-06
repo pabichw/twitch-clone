@@ -9,11 +9,11 @@ import {
   getUserComplete,
   getUserError,
 } from './actions';
-import api from '../../utils/api';
+import twitchApi from '../../utils/api/twitch';
 import { apiConfig } from '../../config/apiConfig';
 import { GET_GAME, GET_REC_CHANNEL, GET_STREAM_TAGS, GET_USER } from './types';
 
-const { ROOT_URL } = apiConfig;
+const { TWITCH_ROOT_URL } = apiConfig;
 
 export function* getUserFlow({
   payload: { onSuccess, userId },
@@ -21,7 +21,9 @@ export function* getUserFlow({
   try {
     const {
       data: { data },
-    } = yield call(() => api.get(`${ROOT_URL}/users?id=${userId}`));
+    } = yield call(() =>
+      twitchApi.get(`${TWITCH_ROOT_URL}/users?id=${userId}`),
+    );
     const user = data[0];
     yield put(getUserComplete(user));
     yield call(onSuccess(user));
@@ -34,7 +36,7 @@ export function* getGameFlow({ payload: { onSuccess, id } }: ReturnType<any>) {
   try {
     const {
       data: { data },
-    } = yield call(() => api.get(`${ROOT_URL}/games?id=${id}`));
+    } = yield call(() => twitchApi.get(`${TWITCH_ROOT_URL}/games?id=${id}`));
     const game = data[0];
     yield put(getGameComplete(game));
     yield call(onSuccess(game));
@@ -44,12 +46,16 @@ export function* getGameFlow({ payload: { onSuccess, id } }: ReturnType<any>) {
 }
 
 export function* getStreamTagsFlow({
-  payload: { onSuccess, id },
+  payload: { onSuccess, broadcaster_id },
 }: ReturnType<any>) {
   try {
     const {
       data: { data },
-    } = yield call(() => api.get(`${ROOT_URL}/streams/tags?id=${id}`));
+    } = yield call(() =>
+      twitchApi.get(
+        `${TWITCH_ROOT_URL}/streams/tags?broadcaster_id=${broadcaster_id}`,
+      ),
+    );
     const streamTags = data;
     yield put(getStreamTagsComplete(streamTags));
     yield call(onSuccess(streamTags));
@@ -64,7 +70,7 @@ export function* getRecommendedChannelsFlow({
   try {
     const {
       data: { data },
-    } = yield call(() => api.get(`${ROOT_URL}/streams`)); // because no recommended channels specific endpoint
+    } = yield call(() => twitchApi.get(`${TWITCH_ROOT_URL}/streams`)); // because no recommended channels specific endpoint
     const channels = data;
     yield put(getRecommendedChannelsComplete(channels));
     yield call(onSuccess(channels));

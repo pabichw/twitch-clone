@@ -58,7 +58,7 @@ const StreamThumbnail: FunctionComponent<StreamThumbnailProps> = ({
     }
     dispatch(
       getStreamTags({
-        id: stream.user_id,
+        broadcaster_id: stream.user_id,
         onSuccess: tags => {
           setStreamTags(tags);
         },

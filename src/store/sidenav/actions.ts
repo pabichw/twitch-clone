@@ -45,9 +45,12 @@ export const getGameError = (error: APIError): SideNavActionTypes => ({
   payload: error,
 });
 
-export const getStreamTags = ({ id, onSuccess }): SideNavActionTypes => ({
+export const getStreamTags = ({
+  broadcaster_id,
+  onSuccess,
+}): SideNavActionTypes => ({
   type: GET_STREAM_TAGS,
-  payload: { id, onSuccess },
+  payload: { broadcaster_id, onSuccess },
 });
 
 export const getStreamTagsComplete = (tags): SideNavActionTypes => ({
