@@ -103,13 +103,13 @@ const IconWrap = styled.div`
   transform: rotateZ(${(props: IconWrapProps) => props.rotate});
 `;
 
-type CollapseBtnWrapper = {
+type CollapseBtnWrapperProps = {
   r: string;
 };
 
 const CollapseBtnWrapper = styled.div`
   position: absolute;
-  right: ${(props: CollapseBtnWrapper) => props.r};
+  right: ${(props: CollapseBtnWrapperProps) => props.r};
   top: 8px;
 `;
 
