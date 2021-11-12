@@ -68,8 +68,8 @@
     "**/@typescript-eslint/parser": "^4.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "npm i && react-scripts build",
+    "start": "react-scripts start ",
+    "build": "npm i --legacy-peer-deps && react-scripts build",
     "clean:build": "rm -rf build && rm -rf yarn.lock && rm -rf node_modules && yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
