@@ -69,8 +69,8 @@
   },
   "scripts": {
     "start": "react-scripts start ",
-    "build": "npm i --legacy-peer-deps && react-scripts build",
-    "clean:build": "rm -rf build && rm -rf yarn.lock && rm -rf node_modules && yarn build",
+    "build": "yarn && react-scripts build",
+    "clean:build": "rm -rf build && rm -rf node_modules && yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
