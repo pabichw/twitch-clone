@@ -28,7 +28,7 @@ export function* getUserFlow({
     yield put(getUserComplete(user));
     yield call(onSuccess(user));
   } catch (err) {
-    yield put(getUserError(err));
+    yield put(getUserError(err as string));
   }
 }
 
@@ -41,7 +41,7 @@ export function* getGameFlow({ payload: { onSuccess, id } }: ReturnType<any>) {
     yield put(getGameComplete(game));
     yield call(onSuccess(game));
   } catch (err) {
-    yield put(getGameError(err));
+    yield put(getGameError(err as string));
   }
 }
 
@@ -60,7 +60,7 @@ export function* getStreamTagsFlow({
     yield put(getStreamTagsComplete(streamTags));
     yield call(onSuccess(streamTags));
   } catch (err) {
-    yield put(getStreamTagsError(err));
+    yield put(getStreamTagsError(err as string));
   }
 }
 
@@ -75,7 +75,7 @@ export function* getRecommendedChannelsFlow({
     yield put(getRecommendedChannelsComplete(channels));
     yield call(onSuccess(channels));
   } catch (err) {
-    yield put(getRecommendedChannelsError(err));
+    yield put(getRecommendedChannelsError(err as string));
   }
 }
 

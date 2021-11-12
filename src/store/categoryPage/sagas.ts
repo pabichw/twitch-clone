@@ -20,7 +20,7 @@ export function* getCategoryStreamsFlow({ payload: catId }: ReturnType<any>) {
     );
     yield put(getCategoryStreamsComplete(data));
   } catch (err) {
-    yield put(getCategoryStreamsError(err));
+    yield put(getCategoryStreamsError(err as string));
   }
 }
 
@@ -37,7 +37,7 @@ export function* getGameFlow({
     yield put(getGameComplete(game));
     yield call(onSuccess(game));
   } catch (err) {
-    yield put(getGameError(err));
+    yield put(getGameError(err as string));
   }
 }
 

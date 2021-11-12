@@ -13,7 +13,7 @@ export function* signInFlow({ payload: signInCredentials }: ReturnType<any>) {
     // api call here
     yield put(signInComplete());
   } catch (err) {
-    yield put(signInError(err));
+    yield put(signInError(err as string));
   }
 }
 
@@ -26,7 +26,7 @@ export function* getAppTokenFlow() {
     localStorage.setItem(LS_KEYS.APP_TOKEN, data.access_token);
     yield put(getAppTokenComplete(data));
   } catch (err) {
-    yield put(signInError(err));
+    yield put(signInError(err as string));
   }
 }
 

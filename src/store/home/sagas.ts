@@ -22,7 +22,7 @@ export function* getStreamsFlow() {
     );
     yield put(getStreamsComplete(data));
   } catch (err) {
-    yield put(getStreamsError(err));
+    yield put(getStreamsError(err as string));
   }
 }
 
@@ -36,7 +36,7 @@ export function* getGamesFlow() {
     );
     yield put(getGamesComplete(data));
   } catch (err) {
-    yield put(getGamesError(err));
+    yield put(getGamesError(err as string));
   }
 }
 

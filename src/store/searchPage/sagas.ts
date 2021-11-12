@@ -16,7 +16,7 @@ export function* getSearchResultsFlow({ payload: query }: ReturnType<any>) {
     const channels = data;
     yield put(getSearchResultsComplete(channels));
   } catch (err) {
-    yield put(getSearchResultsError(err));
+    yield put(getSearchResultsError(err as string));
   }
 }
 

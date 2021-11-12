@@ -24,7 +24,7 @@ export function* getChannelFlow({ payload: broadcasterId }: ReturnType<any>) {
     const channel = data[0];
     yield put(getChannelComplete(channel));
   } catch (err) {
-    yield put(getChannelError(err));
+    yield put(getChannelError(err as string));
   }
 }
 
@@ -39,7 +39,7 @@ export function* getBroadcasterFlow({ payload: login }: ReturnType<any>) {
     yield put(getBroadcasterComplete(broadcaster));
     yield put(getChannel({ id: broadcaster.id }));
   } catch (err) {
-    yield put(getBroadcasterError(err));
+    yield put(getBroadcasterError(err as string));
   }
 }
 
